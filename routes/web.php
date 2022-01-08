@@ -14,11 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/soal', 'Admin\SoalController@index')->name('soal');
+Route::post('/addsoal', 'Admin\SoalController@store')->name('addsoal');
+Route::post('/editsoal/{id}', 'Admin\SoalController@update');
+
+Route::get('/kluster', 'Admin\KlusterController@index')->name('kluster');
+Route::post('/addkluster', 'Admin\KlusterController@store')->name('addkluster');
+
 Route::resource('/dashboard', 'Pages\DashboardController');
 

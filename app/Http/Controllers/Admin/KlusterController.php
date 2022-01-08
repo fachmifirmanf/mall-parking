@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Pages;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
-class DashboardController extends Controller
+class KlusterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('pages.home',['title' => 'Dashboard']);
+       // $soal = DB::table('list_soals')
+        //         ->join('klusters','klusters.id','list_soals.kluster_id')
+        //         ->join('soals','soals.id','list_soals.soal_id')
+        //         ->get();
+
+        $kluster = DB::table('klusters')
+        // ->join('klusters','klusters.id','list_soals.kluster_id')
+        // ->join('soals','soals.id','list_soals.soal_id')
+        ->orderBy('type')
+        ->get();
+         return view('pages.admin.kluster',['kluster' => $kluster,'title' => 'Kluster']);
     }
 
     /**
@@ -35,7 +46,12 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+           DB::table('klusters')->insert([
+        'nama_kluster' => $request->nama_kluster,
+        'waktu_pengerjaan' => $request->waktu_pengerjaan,
+        'type' => $request->tipe,
+     ]);
+        return response()->json(['success' => true]);
     }
 
     /**
