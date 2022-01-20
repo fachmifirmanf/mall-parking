@@ -19,19 +19,29 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/soal', 'Admin\SoalController@index')->name('soal');
-Route::post('/addsoal', 'Admin\SoalController@store')->name('addsoal');
-Route::post('/editsoal/{id}', 'Admin\SoalController@update');
 
-Route::get('/kluster', 'Admin\KlusterController@index')->name('kluster');
-Route::post('/addkluster', 'Admin\KlusterController@store')->name('addkluster');
 
-Route::get('/soal-peserta', 'Peserta\SoalPesertaController@index')->name('soal-peserta');
-Route::any('/detail-soal-peserta/{id}', 'Peserta\SoalPesertaController@show');
+
+
+Route::group(['middleware' => ['web', 'auth', 'roles']],function(){
 
 Route::resource('/dashboard', 'Pages\DashboardController');
+
+
+ Route::group(['roles'=>'Petugas'],function(){
+
+  //manage parkir petugas
+Route::get('/blok-parkir-petugas', 'Pages\Petugas\BlokParkirController@index')->name('blok-parkir-petugas');
+Route::post('/data-block', 'Pages\Petugas\BlokParkirController@datablock')->name('data-block');
+Route::post('/add-blok-parkir-petugas', 'Pages\Petugas\BlokParkirController@store')->name('add-blok-parkir-petugas');
+Route::post('/update-blok-parkir-petugas/{id}', 'Pages\Petugas\BlokParkirController@update')->name('update-blok-parkir-petugas');
+Route::get('/delete-blok-parkir-petugas/{id}', 'Pages\Petugas\BlokParkirController@destroy')->name('delete-blok-parkir-petugas');
+
+ });
+ 
+ Route::group(['roles'=>'Admin'],function(){
+
 
 //manage lantai parkir
 Route::get('/lantai-parkir', 'Pages\Parkir\LantaiParkirController@index')->name('lantai-parkir');
@@ -53,9 +63,5 @@ Route::get('/blok-parkir', 'Pages\Parkir\BlokParkirController@index')->name('blo
 Route::post('/add-blok-parkir', 'Pages\Parkir\BlokParkirController@store')->name('add-blok-parkir');
 Route::post('/update-blok-parkir/{id}', 'Pages\Parkir\BlokParkirController@update')->name('update-blok-parkir');
 Route::get('/delete-blok-parkir/{id}', 'Pages\Parkir\BlokParkirController@destroy')->name('delete-blok-parkir');
-//manage parkir petugas
-Route::get('/blok-parkir-petugas', 'Pages\Petugas\BlokParkirController@index')->name('blok-parkir-petugas');
-Route::post('/data-block', 'Pages\Petugas\BlokParkirController@datablock')->name('data-block');
-Route::post('/add-blok-parkir-petugas', 'Pages\Petugas\BlokParkirController@store')->name('add-blok-parkir-petugas');
-Route::post('/update-blok-parkir-petugas/{id}', 'Pages\Petugas\BlokParkirController@update')->name('update-blok-parkir-petugas');
-Route::get('/delete-blok-parkir-petugas/{id}', 'Pages\Petugas\BlokParkirController@destroy')->name('delete-blok-parkir-petugas');
+ });
+});

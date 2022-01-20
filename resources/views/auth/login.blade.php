@@ -17,7 +17,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <meta name="description" content="Midone admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
         <meta name="keywords" content="admin template, Midone admin template, dashboard template, flat admin template, responsive admin template, web app">
         <meta name="author" content="LEFT4CODE">
-        <title>Toko Komputer</title>
+        <title>Parking Area Apps</title>
         <!-- BEGIN: CSS Assets-->
         <link rel="stylesheet" href="{{url('/midone/dist/css/app.css')}}" />
         <!-- END: CSS Assets-->
@@ -30,7 +30,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="hidden xl:flex flex-col min-h-screen">
                     <a href="" class="-intro-x flex items-center pt-5">
                         <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="{{url('/midone/dist/images/logo.svg')}}">
-                        <span class="text-white text-lg ml-3"> TC<span class="font-medium">TC</span> </span>
+                        <span class="text-white text-lg ml-3"> Parking Area <span class="font-medium">Apps</span> </span>
                     </a>
                     <div class="my-auto">
                         <img alt="Midone Tailwind HTML Admin Template" class="-intro-x w-1/2 -mt-16" src="{{url('/midone/dist/images/illustration.svg')}}">

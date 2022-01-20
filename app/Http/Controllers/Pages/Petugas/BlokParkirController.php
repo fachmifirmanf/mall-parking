@@ -9,6 +9,7 @@ use App\Model\LantaiParkir;
 use App\Model\JenisKendaraan;
 use App\Model\Kendaraan;
 use App\Model\Parkir;
+use App\Model\Role;
 class BlokParkirController extends Controller
 {
     /**

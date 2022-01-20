@@ -92,6 +92,14 @@
                     <!-- END: GET Info -->
                 </div>
 @foreach ($parkir as $index => $item2)
+@php
+
+    $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
+    $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+    $tanggal = date("Y-m-d");
+    $data_barcode = $tanggal . $item2->blok->nama . $item2->blok->lantai->nama . $item2->kendaraan->jenis->nama . $item2->kendaraan->plat_nomor;
+
+@endphp
 <div class="modal" id="detail-blok{{ $item2->id }}">
     <div class="modal__content">
      <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
@@ -128,6 +136,9 @@
               <label>Plat Nomor Kendaraan</label>
                <input disabled type="text" value="{{ $item2->kendaraan->plat_nomor}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
             </div>
+            <div class="col-span-12">
+            <img style="width:420px;height:100px" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($data_barcode, $generatorPNG::TYPE_CODE_128)) }}">
+            </div>
         </div>
             <div class="px-5 py-3 text-right border-t border-gray-200">
                 <button type="button" data-dismiss="modal"
@@ -153,22 +164,31 @@ function pilih_lantai(e,id) {
 
             $.each(data, function () {
                 $.each(this, function (index, value) {
-                    status=value.parkir.status;
-                    if (status === 1) {
-                    console.log(value.parkir.status);
+                    if (value.parkir != null) {
+                         status=value.parkir.status;
+                    if (status == 1) {
                            $('#data').append('' +
+                                '<td>'+
+                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir.id +')" class="button inline-block bg-theme-2 text-white">'+( value.id )+
+                                '</button>' +
+                                '</td>');
+
+                    }
+                    else{
+                                                    $('#data').append('' +
                                 '<td>'+
                                 '<button type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="button inline-block bg-theme-1 text-white">'+( value.nama )+
                                 '</button>' +
                                 '</td>');
                     }
+                }
                     else{
-                            $('#data').append('' +
+       $('#data').append('' +
                                 '<td>'+
-                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir.id +')" class="button inline-block bg-theme-2 text-white">'+( value.nama )+
+                                '<button type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="button inline-block bg-theme-1 text-white">'+( value.nama )+
                                 '</button>' +
                                 '</td>');
-                    }
+                    }                   
                          
                
                 });
