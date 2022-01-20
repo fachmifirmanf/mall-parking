@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Pages;
+namespace App\Http\Controllers\Pages\Parkir;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-class DashboardController extends Controller
+use App\Model\LantaiParkir;
+class LantaiParkirController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
+            $lantai = LantaiParkir::all();
+         return view('pages.parkir.lantai_parkir' ,[
+            'lantai' => $lantai,
+            'title' => 'Lantai Parkir'
+        ]);
 
-         return view('pages.dashboard.index',['title' => 'Dashboard']);
     }
 
     /**
@@ -36,7 +40,12 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->nama);
+
+        LantaiParkir::where('nama','!=', $request->nama)->create([
+            'nama' => $request->nama,
+        ]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -70,9 +79,18 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($id);
+        // dd($request->nama);
+      
+        LantaiParkir::where('id', $request->id_lantai)->update([
+            'nama' => $request->editnama,
+        ]);
+        return response()->json(['success' => true]);
     }
-
+    public function update_lantai(Request $request)
+    {
+        // code...
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -81,6 +99,8 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = LantaiParkir::where('id',$id);
+        $data->delete();
+        return redirect('lantai-parkir');
     }
 }

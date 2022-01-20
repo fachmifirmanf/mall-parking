@@ -15,7 +15,6 @@ class SoalController extends Controller
     public function index()
     {
   
-
         $soal = DB::table('soals')
         // ->join('jawaban_soals','jawaban_soals.id','soals.kunci_jawaban')
         // ->join('list_soals','list_soals.soal_id','soals.id')
@@ -29,7 +28,12 @@ class SoalController extends Controller
         // ->orderBy('type')
         ->get();
         // dd($jawab);
-         return view('pages.admin.soal',['soal' => $soal,'jawab' => $jawab,'title' => 'Soal']);
+        $kluster = DB::table('klusters')
+        // ->join('klusters','klusters.id','list_soals.kluster_id')
+        // ->join('soals','soals.id','list_soals.soal_id')
+        ->orderBy('type')
+        ->get();
+         return view('pages.admin.soal',['kluster' => $kluster,'soal' => $soal,'jawab' => $jawab,'title' => 'Soal']);
     }
 
     /**
@@ -51,6 +55,7 @@ class SoalController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request->id_kluster);
 
         for ($i=0; $i <= count($request->soal); $i++) { 
 
@@ -60,9 +65,7 @@ class SoalController extends Controller
         'kunci_jawaban' => $request->jawaban_benar[$i],
         'skor' => $request->skor[$i],
 
-     ]);
-            
-    
+     ]);   
 
         $soal_id = DB::table('soals')->where('soal',$request->soal[$i])->first();
 
@@ -77,7 +80,6 @@ class SoalController extends Controller
 
             ];
        
-
         foreach ($add as $key => $value) {
 
                 DB::table('jawaban_soals')->insert([
@@ -88,7 +90,6 @@ class SoalController extends Controller
 
         }
 
-
         $jawaban = DB::table('jawaban_soals')->where('jawaban',$request->jawaban_benar[$i])->first();
 
 
@@ -98,6 +99,12 @@ class SoalController extends Controller
 
      ]);
             
+        DB::table('list_soals')->insert([
+                'soal_id' => $soal_id->id,
+                'kluster_id' => $request->id_kluster,
+
+            ]);
+
         }
 
         return response()->json(['success' => true]);

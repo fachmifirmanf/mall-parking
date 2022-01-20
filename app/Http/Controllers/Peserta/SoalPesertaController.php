@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Pages;
+namespace App\Http\Controllers\Peserta;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
-class DashboardController extends Controller
+class SoalPesertaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
-         return view('pages.dashboard.index',['title' => 'Dashboard']);
+         
     }
 
     /**
@@ -45,9 +44,21 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        //
+        // dd($request->id_kluster);
+        $list = DB::table('list_soals')
+        ->join('soals','soals.id','list_soals.soal_id')
+        ->where('list_soals.kluster_id',$id)
+        ->orderBy('list_soals.soal_id')
+        ->get();
+        $list_jawaban = DB::table('jawaban_soals')
+        ->join('soals','soals.id','jawaban_soals.soal_id')
+        // ->orderBy('jawaban_soals.soal_id')
+        ->inRandomOrder()
+        ->get();
+        // dd($list);
+            return view('pages.peserta.soal',['list' => $list,'list_jawaban' => $list_jawaban,'title' => 'Soal']);
     }
 
     /**

@@ -1,78 +1,50 @@
 @extends('layouts.app')
 @section('content')
+
  <div class="grid grid-cols-12 gap-6">
                     <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
                         <!-- BEGIN: General Report -->
                         <div class="col-span-12 mt-8">
                             <div class="intro-y flex items-center h-10">
-                                <h2 class="text-lg font-medium truncate mr-5">
+                       <h2 class="text-lg font-medium truncate mr-5">
                                     General Report
                                 </h2>
                                 <a href="" class="ml-auto flex text-theme-1"> <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i> Reload Data </a>
                             </div>
+                            <div class="mt-5">
+                           
+                            </div>
+         
                             <div class="grid grid-cols-12 gap-6 mt-5">
-                                <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                    <div class="report-box zoom-in">
-                                        <div class="box p-5">
-                                            <div class="flex">
-                                                <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i> 
-                                                <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-theme-9 tooltip cursor-pointer" title="33% Higher than last month"> 33% <i data-feather="chevron-up" class="w-4 h-4"></i> </div>
-                                                </div>
-                                            </div>
-                                            <div class="text-3xl font-bold leading-8 mt-6">4.510</div>
-                                            <div class="text-base text-gray-600 mt-1">Item Sales</div>
+                           @forelse($kluster as $index => $kluster)    
+                            <div class="col-span-12 sm:col-span-6 xxl:col-span-3 intro-y">
+                                <div class="mini-report-chart box p-5 zoom-in">
+                                    <div class="flex items-center">
+                                        <div class="w-2/4 flex-none">
+                                            <div class="text-lg font-medium truncate">{{$kluster->nama_kluster}}</div>
+                                            <div class="text-gray-600 mt-1">{{$kluster->type}}</div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                    <div class="report-box zoom-in">
-                                        <div class="box p-5">
-                                            <div class="flex">
-                                                <i data-feather="credit-card" class="report-box__icon text-theme-11"></i> 
-                                                <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-theme-6 tooltip cursor-pointer" title="2% Lower than last month"> 2% <i data-feather="chevron-down" class="w-4 h-4"></i> </div>
-                                                </div>
-                                            </div>
-                                            <div class="text-3xl font-bold leading-8 mt-6">3.521</div>
-                                            <div class="text-base text-gray-600 mt-1">New Orders</div>
+                                        <div class="flex-none ml-auto relative"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                        <div class="py-1 px-2 rounded-full text-xs bg-gray-200 text-gray-600 cursor-pointer ml-auto truncate">{{$kluster->waktu_pengerjaan}} menit</div>
+
+                                        <div style="margin-right: -3em;" class="pt-2">
+                                        <a href="{{ url('detail-soal-peserta',$kluster->id) }}">
+                                        <button class="button inline-block bg-theme-1 text-white"><i style="width: 10px;height: 10px;" data-feather="send"></i>
+                                        </button>
+                                        </a>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                    <div class="report-box zoom-in">
-                                        <div class="box p-5">
-                                            <div class="flex">
-                                                <i data-feather="monitor" class="report-box__icon text-theme-12"></i> 
-                                                <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-theme-9 tooltip cursor-pointer" title="12% Higher than last month"> 12% <i data-feather="chevron-up" class="w-4 h-4"></i> </div>
-                                                </div>
-                                            </div>
-                                            <div class="text-3xl font-bold leading-8 mt-6">2.145</div>
-                                            <div class="text-base text-gray-600 mt-1">Total Products</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                    <div class="report-box zoom-in">
-                                        <div class="box p-5">
-                                            <div class="flex">
-                                                <i data-feather="user" class="report-box__icon text-theme-9"></i> 
-                                                <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-theme-9 tooltip cursor-pointer" title="22% Higher than last month"> 22% <i data-feather="chevron-up" class="w-4 h-4"></i> </div>
-                                                </div>
-                                            </div>
-                                            <div class="text-3xl font-bold leading-8 mt-6">152.000</div>
-                                            <div class="text-base text-gray-600 mt-1">Unique Visitor</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- END: General Report -->
+                            @empty
+                            @endforelse
                         
-                            
+                            </div>
+                        </div>
+                        <!-- END: General Report -->                     
                         </div>
                     </div>
                 </div>
+
 @endsection

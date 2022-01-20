@@ -65,7 +65,7 @@
 <div class="modal" id="add-soal">
     <div class="modal__content">
      <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
-      <h2 class="font-medium text-base mr-auto">Tambah Kluster</h2>
+      <h2 class="font-medium text-base mr-auto">Tambah Soal</h2>
        <button id="addMore" class="button border items-center text-gray-700 hidden sm:flex">
         <i data-feather="plus-circle" class="w-4 h-4 mr-2"></i>
          Tambah Soal
@@ -83,6 +83,15 @@
              </div> 
             </div> 
      </div>
+            <div class="col-span-12 sm:col-span-6 p-5">
+             <label>Tipe Kluster</label>
+              <select id="tipe-kluster" name="id_kluster" class="input w-full border mt-2 flex-1">
+                @forelse($kluster as $index => $klusters)
+               <option value="{{$klusters->id}}">{{$klusters->type}} - {{$klusters->nama_kluster}} - {{$klusters->waktu_pengerjaan}}</option>
+                @empty
+                @endforelse
+              </select>
+            </div>
         <div class="p-5 grid grid-cols-12 gap-4 row-gap-3" id="fieldList">
             <div class="col-span-12 sm:col-span-6">
               <label>Soal</label>
@@ -138,25 +147,20 @@
     <div class="modal__content">
      <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
       <h2 class="font-medium text-base mr-auto">Edit Kluster {{$soalz->id}}</h2>
-       <!-- <button id="addMore" class="button border items-center text-gray-700 hidden sm:flex">
-        <i data-feather="plus-circle" class="w-4 h-4 mr-2"></i>
-         Tambah Soal
-         </button> -->
+   
           <div class="dropdown relative sm:hidden">
            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;">
             <i data-feather="more-horizontal" class="w-5 h-5 text-gray-700"></i>
              </a>
               <div class="dropdown-box mt-5 absolute w-40 top-0 right-0 z-20">
                <div class="dropdown-box__content box p-2">
-     <!--            <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md">
-                 <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs 
-                </a>  -->
+
               </div> 
              </div> 
             </div> 
      </div>
 
-        <div class="p-5 grid grid-cols-12 gap-4 row-gap-3" id="fieldList">
+        <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
             <div class="col-span-12 sm:col-span-6">
               <label>Soal</label>
                <input type="text" value="{{ $soalz->soal }}" name="edit_soal{{ $soalz->id }}" class="input w-full border mt-2 flex-1">
@@ -212,6 +216,8 @@
         // alert('btn add');
 
         e.preventDefault();
+        var k = document.getElementById("tipe-kluster");
+        var id_kluster = k.value;
         var soal = $("input[name='soal[]']")
               .map(function(){return $(this).val();}).get();
         var jawaban_benar = $("input[name='jawaban_benar[]']")
@@ -234,7 +240,7 @@
 
            url:"{{ route('addsoal') }}",
 
-           data:{"_token": "{{ csrf_token() }}",soal:soal,jawaban_benar:jawaban_benar,jawaban_salah1:jawaban_salah1,jawaban_salah2:jawaban_salah2,jawaban_salah3:jawaban_salah3,jawaban_salah4:jawaban_salah4,jawaban_salah5:jawaban_salah5,skor:skor,
+           data:{"_token": "{{ csrf_token() }}",id_kluster:id_kluster,soal:soal,jawaban_benar:jawaban_benar,jawaban_salah1:jawaban_salah1,jawaban_salah2:jawaban_salah2,jawaban_salah3:jawaban_salah3,jawaban_salah4:jawaban_salah4,jawaban_salah5:jawaban_salah5,skor:skor,
          },
 
            success:function(data){
@@ -312,9 +318,9 @@ var h = indx.slice(Math.max(indx.length - 5, 0));
 }
 
 
-$(function() {
-  $("#addMore").click(function(e) {
-    e.preventDefault();
+$(document).ready(function(){
+  $("#addMore").click(function() {
+
     $("#fieldList").append("<div class='col-span-12 sm:col-span-6'> <label>Soal</label><input type='text' name='soal[]' class='input w-full border mt-2 flex-1'>    </div>");
     $("#fieldList").append("<div class='col-span-12 sm:col-span-6'> <label>Jawaban Benar</label><input type='text' name='jawaban_benar[]' class='input w-full border mt-2 flex-1'>    </div>");
     $("#fieldList").append("<div class='col-span-12 sm:col-span-6'><label>Jawaban Salah 1</label><input type='text' name='jawaban_salah1[]' class='input w-full border mt-2 flex-1'></div>");

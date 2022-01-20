@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-class DashboardController extends Controller
+use App\Model\Parkir;
+class ParkirController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
-         return view('pages.dashboard.index',['title' => 'Dashboard']);
+         $kluster = Parkir::all();
+         return view('pages.parkir.index' ,[
+            'kluster' => $kluster,
+            'title' => 'Kluster'
+        ]);
     }
 
     /**

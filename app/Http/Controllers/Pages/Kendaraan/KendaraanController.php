@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Pages;
+namespace App\Http\Controllers\Pages\Kendaraan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-class DashboardController extends Controller
+
+class KendaraanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
-         return view('pages.dashboard.index',['title' => 'Dashboard']);
+        //
     }
 
     /**

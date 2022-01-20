@@ -12,7 +12,7 @@
                             <div class="side-menu__title"> Dashboard </div>
                         </a>
                     </li>
-                    <li>
+<!--                     <li>
                         <a href="{{route('kluster')}}" class="side-menu {{ request()->is('kluster') ? 'side-menu--active' : ''}}">
                             <div class="side-menu__icon"> <i data-feather="server"></i> </div>
                             <div class="side-menu__title"> Kluster </div>
@@ -25,6 +25,37 @@
                         </a>
                     </li>
                     
+                    <li>
+                        <a href="{{route('soal-peserta')}}" class="side-menu {{ request()->is('soal-peserta') ? 'side-menu--active' : ''}}">
+                            <div class="side-menu__icon"> <i data-feather="book"></i> </div>
+                            <div class="side-menu__title"> Soal Peserta</div>
+                        </a>
+                    </li> -->
+
+                    <li>
+                        <a href="{{url('lantai-parkir')}}" class="side-menu {{ request()->is('lantai-parkir') ? 'side-menu--active' : ''}}">
+                            <div class="side-menu__icon"> <i data-feather="server"></i> </div>
+                            <div class="side-menu__title"> Lantai Parkir </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('blok-parkir')}}" class="side-menu {{ request()->is('blok-parkir') ? 'side-menu--active' : ''}}">
+                            <div class="side-menu__icon"> <i data-feather="server"></i> </div>
+                            <div class="side-menu__title"> Blok Parkir </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('jenis_kendaraan')}}" class="side-menu {{ request()->is('jenis_kendaraan') ? 'side-menu--active' : ''}}">
+                            <div class="side-menu__icon"> <i data-feather="server"></i> </div>
+                            <div class="side-menu__title"> Jenis Kendaraan </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('blok-parkir-petugas')}}" class="side-menu {{ request()->is('blok-parkir-petugas') ? 'side-menu--active' : ''}}">
+                            <div class="side-menu__icon"> <i data-feather="server"></i> </div>
+                            <div class="side-menu__title"> Blok Parkir Petugas</div>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- END: Side Menu -->

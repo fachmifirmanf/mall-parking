@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Pages;
+namespace App\Http\Controllers\Pages\Kendaraan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-class DashboardController extends Controller
+use App\Model\JenisKendaraan;
+
+class JenisKendaraanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
-         return view('pages.dashboard.index',['title' => 'Dashboard']);
+          $jenis_kendaraan = JenisKendaraan::all();
+         return view('pages.kendaraan.jenis_kendaraan' ,[
+            'jenis_kendaraan' => $jenis_kendaraan,
+            'title' => 'Jenis Kendaraan'
+        ]);
     }
 
     /**
@@ -36,7 +40,10 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         JenisKendaraan::where('nama','!=', $request->nama)->create([
+            'nama' => $request->nama,
+        ]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -70,7 +77,10 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+            JenisKendaraan::where('id', $request->id_jenis_kendaraan)->update([
+            'nama' => $request->editnama,
+        ]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -81,6 +91,8 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        //
+             $data = JenisKendaraan::where('id',$id);
+        $data->delete();
+        return redirect('jenis_kendaraan');
     }
 }
