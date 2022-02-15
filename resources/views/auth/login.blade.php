@@ -33,7 +33,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <span class="text-white text-lg ml-3"> Parking Area <span class="font-medium">Apps</span> </span>
                     </a>
                     <div class="my-auto">
-                        <img alt="Midone Tailwind HTML Admin Template" class="-intro-x w-1/2 -mt-16" src="{{url('/midone/dist/images/illustration.svg')}}">
+                        <img alt="Midone Tailwind HTML Admin Template" class="-intro-x w-1/2 -mt-16 ml-20" src="{{url('/midone/dist/images/parking-svgrepo-com.svg')}}">
                        <!--  <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
                             A few more clicks to 
                             <br>
@@ -52,7 +52,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <form method="POST" action="{{ route('login') }}">
                           @csrf
                         <div class="intro-x mt-8">
-                            <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" name="username" placeholder="Email">
+                            <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" name="username" placeholder="Username">
                             <input type="password" name="password" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Password">
                         </div>
             

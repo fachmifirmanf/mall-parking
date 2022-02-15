@@ -37,7 +37,7 @@ Route::post('/data-block', 'Pages\Petugas\BlokParkirController@datablock')->name
 Route::post('/add-blok-parkir-petugas', 'Pages\Petugas\BlokParkirController@store')->name('add-blok-parkir-petugas');
 Route::post('/update-blok-parkir-petugas/{id}', 'Pages\Petugas\BlokParkirController@update')->name('update-blok-parkir-petugas');
 Route::get('/delete-blok-parkir-petugas/{id}', 'Pages\Petugas\BlokParkirController@destroy')->name('delete-blok-parkir-petugas');
-
+Route::any('/export-blok-parkir-petugas/{id}', 'Pages\Petugas\BlokParkirController@pdf')->name('export-blok-parkir-petugas');
  });
  
  Route::group(['roles'=>'Admin'],function(){
@@ -64,4 +64,16 @@ Route::post('/add-blok-parkir', 'Pages\Parkir\BlokParkirController@store')->name
 Route::post('/update-blok-parkir/{id}', 'Pages\Parkir\BlokParkirController@update')->name('update-blok-parkir');
 Route::get('/delete-blok-parkir/{id}', 'Pages\Parkir\BlokParkirController@destroy')->name('delete-blok-parkir');
  });
+ //monitor parkir
+Route::get('/monitor-parkir', 'Pages\Monitor\MonitorParkirController@index')->name('monitor-parkir');
+Route::post('/update-monitor-parkir', 'Pages\Monitor\MonitorParkirController@store')->name('update-monitor-parkir');
+Route::post('/data-status-parkir', 'Pages\Monitor\MonitorParkirController@dataparkir')->name('data-status-parkir');
+ //monitor parkir
+Route::get('/ganti-sandi', 'Pages\Akun\AkunController@changepassword')->name('ganti-sandi');
+Route::post('/update-ganti-sandi/{id}', 'Pages\Akun\AkunController@updatechangepassword')->name('update-ganti-sandi');
+ //list user
+Route::get('/list-user', 'Pages\Akun\AkunController@index')->name('list-user');
+Route::post('/add-list-user', 'Pages\Akun\AkunController@store')->name('add-list-user');
+Route::post('/update-list-user/{id}', 'Pages\Akun\AkunController@update')->name('update-list-user');
+Route::get('/delete-list-user/{id}', 'Pages\Akun\AkunController@destroy')->name('delete-list-user');
 });

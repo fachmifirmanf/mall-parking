@@ -10,6 +10,8 @@ use App\Model\JenisKendaraan;
 use App\Model\Kendaraan;
 use App\Model\Parkir;
 use App\Model\Role;
+use DB;
+use PDF;
 class BlokParkirController extends Controller
 {
     /**
@@ -22,7 +24,7 @@ class BlokParkirController extends Controller
          $blok = BlokParkir::with('lantai')->get();
          $lantai = LantaiParkir::all();
          $jenis_kendaraan = JenisKendaraan::all();
-         $parkir = Parkir::all();
+         $parkir = Parkir::where('hapus',0)->get();
 
          return view('pages.petugas.index' ,[
             'blok' => $blok,
@@ -53,6 +55,7 @@ class BlokParkirController extends Controller
      */
     public function store(Request $request)
     {
+           $waktu_keluar = date("Y-m-d H:i:s");
         Kendaraan::where('plat_nomor','!=', $request->plat)->where('id_jenis_kendaraan','!=',$request->jenis_kendaraan)->create([
             'plat_nomor' => $request->plat,
             'id_jenis_kendaraan' => $request->jenis_kendaraan,
@@ -65,8 +68,10 @@ class BlokParkirController extends Controller
             'kendaraan_id' => $id_kendaraan->id,
             'status' => 1,
         ]);
+         // session()->regenerate();
         // ['id','blok_parkir_id','kendaraan_id','status'];
                return response()->json(['success' => true]);
+        // return redirect('blok-parkir-petugas');
 
     }
 
@@ -81,6 +86,26 @@ class BlokParkirController extends Controller
         //
     }
 
+    public function pdf($id)
+    { 
+       
+       $parkir = Parkir::where('id',$id)->get();
+       $judul = DB::table('parkirs')
+        ->leftJoin('kendaraans', 'parkirs.kendaraan_id', '=', 'kendaraans.id')
+        ->leftJoin('blok_parkirs', 'parkirs.blok_parkir_id', '=', 'blok_parkirs.id')
+        ->leftJoin('lantai_parkirs', 'blok_parkirs.lantai_id', '=', 'lantai_parkirs.id')
+        ->select('kendaraans.*', 'parkirs.*' , 'blok_parkirs.nama as nama_blok','lantai_parkirs.nama as nama_lantai')
+        ->where('parkirs.id',$id)
+        ->first();
+       // dd($judul->created_at .' - ' . $judul->plat_nomor .' - '. $judul->nama_lantai .' ( '.   $judul->nama_blok . ' ) ');
+       $pdf = PDF::loadView('pages.petugas.pdf', [
+                'parkir' => $parkir,
+                  'title' => 'Blok Parkir'
+        ])->setPaper('a4');
+          // download PDF file with download method
+          return $pdf->stream($judul->created_at .' - ' . $judul->plat_nomor .' - '. $judul->nama_lantai .' ( '.   $judul->nama_blok . ' ) ' . '.pdf');
+
+    }
     /**
      * Show the form for editing the specified resource.
      *

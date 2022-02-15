@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parkir extends Model
 {
-    protected $fillable = ['id','blok_parkir_id','kendaraan_id','status'];
+    protected $fillable = ['id','blok_parkir_id','kendaraan_id','jam_masuk','jam_keluar','status'];
     
       public function blok()
     {

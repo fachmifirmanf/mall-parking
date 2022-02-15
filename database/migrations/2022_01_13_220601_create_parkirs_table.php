@@ -18,7 +18,6 @@ class CreateParkirsTable extends Migration
             // $table->integer('user_id')->nullable(); 
             // $table->integer('jenis_kendaraan_id')->nullable();
             $table->integer('kendaraan_id')->nullable();
-            // $table->integer('lantai_parkir_id')->nullable();
             $table->integer('blok_parkir_id')->nullable();
             $table->integer('status')->nullable();
             $table->timestamps();

@@ -79,10 +79,10 @@
     <div class="modal__content">
      <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
       <h2 class="font-medium text-base mr-auto">Tambah Lantai</h2>
-       <button class="button border items-center text-gray-700 hidden sm:flex">
+       <!-- <button class="button border items-center text-gray-700 hidden sm:flex">
         <i data-feather="file" class="w-4 h-4 mr-2"></i>
          Download Docs
-         </button>
+         </button> -->
           <div class="dropdown relative sm:hidden">
            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;">
             <i data-feather="more-horizontal" class="w-5 h-5 text-gray-700"></i>
@@ -114,10 +114,10 @@
     <div class="modal__content">
      <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
       <h2 class="font-medium text-base mr-auto">Edit Lantai {{ $item2->id }}</h2>
-       <button class="button border items-center text-gray-700 hidden sm:flex">
+       <!-- <button class="button border items-center text-gray-700 hidden sm:flex">
         <i data-feather="file" class="w-4 h-4 mr-2"></i>
          Download Docs
-         </button>
+         </button> -->
           <div class="dropdown relative sm:hidden">
            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;">
             <i data-feather="more-horizontal" class="w-5 h-5 text-gray-700"></i>

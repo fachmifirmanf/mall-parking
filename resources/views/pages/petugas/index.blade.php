@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<meta name="csrf-token" content="{!! csrf_token() !!}" />
             <div class="pos intro-y grid grid-cols-12 gap-5 mt-5">
                     <!-- BEGIN: Post Content -->
 
@@ -79,7 +80,7 @@
                             <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                                 <div class="col-span-12 sm:col-span-6">
                                     <label>Plat Nomor Kendaraan</label>
-                                    <input required type="text" name="plat_nomor_kendaraan" class="input w-full border mt-2 flex-1">
+                                    <input id="plat_nomor_kendaraan" required type="text" name="plat_nomor_kendaraan" class="input w-full border mt-2 flex-1">
                                 </div>
                             </div>
                             <div class="px-5 py-3 text-right border-t border-gray-200">
@@ -104,10 +105,10 @@
     <div class="modal__content">
      <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
       <h2 class="font-medium text-base mr-auto">Tambah Blok Parkir</h2>
-       <button class="button border items-center text-gray-700 hidden sm:flex">
+ <!--       <button class="button border items-center text-gray-700 hidden sm:flex">
         <i data-feather="file" class="w-4 h-4 mr-2"></i>
          Download Docs
-         </button>
+         </button> -->
           <div class="dropdown relative sm:hidden">
            <a class="dropdown-toggle w-5 h-5 block" href="javascript:;">
             <i data-feather="more-horizontal" class="w-5 h-5 text-gray-700"></i>
@@ -143,22 +144,30 @@
             <div class="px-5 py-3 text-right border-t border-gray-200">
                 <button type="button" data-dismiss="modal"
                         class="btn btn-outline-secondary w-20 mr-1">Close</button>
-             <button id="addbtn" class="button w-20 bg-theme-1 text-white btn-submit">Export</button>
+              <a href="{{ route('export-blok-parkir-petugas', $item2->id) }}" class="btn btn-warning w-24 inline-block mr-1 mb-2">
+                                            <i data-feather="alert-circle" class="w-4 h-4 mr-2"></i>Export</a>
             </div>
     </div>
 </div> 
 @endforeach
 
 <script type="text/javascript">
+
+    var token = '{!! csrf_token() !!}';
+
 function pilih_lantai(e,id) {
     
     $('#data').remove();
     var status;
-    e.preventDefault();
+    if (e != null) {
+        e.preventDefault();
+    }
+    
+
     $.ajax({
         url: "{{ route('data-block')}}",
         type: 'post',  
-        data:{"_token": "{{ csrf_token() }}",lantai_id:id},
+        data:{"_token": "{!! csrf_token() !!}",lantai_id:id},
         dataType: 'json',
         success: function (data) {
 
@@ -166,10 +175,10 @@ function pilih_lantai(e,id) {
                 $.each(this, function (index, value) {
                     if (value.parkir != null) {
                          status=value.parkir.status;
-                    if (status == 1) {
+                    if (status == 1 ) {
                            $('#data').append('' +
                                 '<td>'+
-                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir.id +')" class="button inline-block bg-theme-2 text-white">'+( value.id )+
+                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir.id +')" class="button inline-block bg-theme-6 text-white" >'+( value.parkir.id )+
                                 '</button>' +
                                 '</td>');
 
@@ -215,13 +224,16 @@ $("#save").click(function() {
     $.ajax({
         url: "{{ route('add-blok-parkir-petugas')}}",
         type: 'post',  
-        data:{"_token": "{{ csrf_token() }}",plat:plat,jenis_kendaraan:jenis_kendaraan,blok:blok},
+        data:{"_token": "{!! csrf_token() !!}",plat:plat,jenis_kendaraan:jenis_kendaraan,blok:blok},
         dataType: 'json',
         success: function (data) {
                 console.log(data);  
-                 $('#block_id').val("");  
-                 $('#block_name').val("");
-                pilih_lantai();        
+                //  $('#block_id').val("");  
+                //  $('#block_name').val("");
+                //  $('#plat_nomor_kendaraan').val("");
+                // pilih_lantai();  
+             window.location="{{ url('blok-parkir-petugas') }}";
+
 
     }
 });

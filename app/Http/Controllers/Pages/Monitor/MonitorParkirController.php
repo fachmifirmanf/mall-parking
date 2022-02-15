@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Pages;
+namespace App\Http\Controllers\Pages\Monitor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
 use App\Model\Parkir;
-class DashboardController extends Controller
+
+class MonitorParkirController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,15 +15,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-         $parkir = DB::table('parkirs')
-         ->join('blok_parkirs','parkirs.blok_parkir_id','blok_parkirs.id')
-         ->join('lantai_parkirs','blok_parkirs.lantai_id','lantai_parkirs.id')
-         ->where('hapus',0)
-         ->groupBy('blok_parkirs.lantai_id')
-         ->select(array('parkirs.*','blok_parkirs.*','lantai_parkirs.*', DB::raw('COUNT(parkirs.kendaraan_id) as kendaraan')))
-         ->get();
-         // dd($parkir);
-         return view('pages.dashboard.index',['title' => 'Dashboard','parkir' => $parkir]);
+
+        return view('pages.monitor.index' ,[
+            'title' => 'Monitoring Parkir'
+        ]);
     }
 
     /**
@@ -35,7 +30,13 @@ class DashboardController extends Controller
     {
         //
     }
+    public function dataparkir()
+    {
+         $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->get();
 
+         return response()->json(['return' => $parkir]);
+        
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -44,7 +45,16 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->id);
+        $waktu_keluar = date("Y-m-d H:i:s");
+        // dd($waktu_keluar);
+         Parkir::where('id', $request->id)->update([
+
+            'status' => 0,
+            'hapus' => 1,
+            'updated_at' => $waktu_keluar,
+        ]);
+        return response()->json(['success' => true]);
     }
 
     /**
