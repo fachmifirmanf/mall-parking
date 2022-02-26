@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route::get('/blok-parkir-pengunjung', 'Pages\Pengunjung\BlokParkirController@index')->name('blok-parkir-pengunjung');
+Route::post('/data-block-pengunjung', 'Pages\Pengunjung\BlokParkirController@datablock')->name('data-block-pengunjung');
+Route::post('/add-blok-parkir-pengunjung', 'Pages\Pengunjung\BlokParkirController@store')->name('add-blok-parkir-pengunjung');
+Route::post('/update-blok-parkir-pengunjung/{id}', 'Pages\Pengunjung\BlokParkirController@update')->name('update-blok-parkir-pengunjung');
+Route::get('/delete-blok-parkir-pengunjung/{id}', 'Pages\Pengunjung\BlokParkirController@destroy')->name('delete-blok-parkir-pengunjung');
+Route::any('/export-blok-parkir-pengunjung/{id}', 'Pages\Pengunjung\BlokParkirController@pdf')->name('export-blok-parkir-pengunjung');
 
 Auth::routes();
 

@@ -12,6 +12,8 @@
                             <div class="side-menu__title"> Dashboard </div>
                         </a>
                     </li>
+                    @if(Auth::user() == true)
+
                     @if(Auth::user()->role == 1)
 
                     <li>
@@ -42,7 +44,15 @@
                     <li>
                         <a href="{{url('blok-parkir-petugas')}}" class="side-menu {{ request()->is('blok-parkir-petugas') ? 'side-menu--active' : ''}}">
                             <div class="side-menu__icon"> <i data-feather="box"></i> </div>
-                            <div class="side-menu__title"> Blok Parkir Petugas</div>
+                            <div class="side-menu__title"> Blok Parkir</div>
+                        </a>
+                    </li>
+                    @endif
+                                        @else
+                    <li>
+                        <a href="{{url('blok-parkir-pengunjung')}}" class="side-menu {{ request()->is('blok-parkir-pengunjung') ? 'side-menu--active' : ''}}">
+                            <div class="side-menu__icon"> <i data-feather="box"></i> </div>
+                            <div class="side-menu__title"> Blok Parkir</div>
                         </a>
                     </li>
                     @endif
