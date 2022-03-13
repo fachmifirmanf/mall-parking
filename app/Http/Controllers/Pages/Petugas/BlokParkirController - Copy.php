@@ -21,13 +21,7 @@ class BlokParkirController extends Controller
      */
     public function index()
     { 
-        //  $blok = BlokParkir::with(['lantai', 'parkir'=> function($q) {
-        //     // $q->where('hapus', '=', 0);
-        //     $q->orderBy('status', 'asc');
-        // }])->get();
-         $blok = BlokParkir::orderBy('updated_at', 'asc')->get();
-
-         // dd($blok);
+         $blok = BlokParkir::with('lantai')->get();
          $lantai = LantaiParkir::all();
          $jenis_kendaraan = JenisKendaraan::all();
          $parkir = Parkir::where('hapus',0)->get();
@@ -48,20 +42,7 @@ class BlokParkirController extends Controller
      */
     public function datablock(Request $request)
     {
-         // $blok = BlokParkir::with(['lantai','parkir'])->where('lantai_id',$request->lantai_id)->get();
-        //    $blok = BlokParkir::with(['lantai', 'parkir'=> function($q) {
-        //     $q->where('hapus', '=', 0);
-        // }])->get();
-         // $blok = BlokParkir::with(['lantai','parkir'])->orderBy('status', 'asc')->get();
-
-        $blok = DB::table('blok_parkirs')
-        ->leftJoin('parkirs', 'parkirs.blok_parkir_id', '=', 'blok_parkirs.id')
-        ->leftJoin('lantai_parkirs', 'blok_parkirs.lantai_id', '=', 'lantai_parkirs.id')
-        ->select('parkirs.id as parkir_id','parkirs.status as parkir_status','parkirs.hapus' , 'blok_parkirs.*','lantai_parkirs.nama as lantai_parkirs_nama')
-        ->where('parkirs.hapus',0)
-        ->orderBy('parkir_status', 'asc')
-        ->get();
-
+         $blok = BlokParkir::with(['lantai','parkir'])->where('lantai_id',$request->lantai_id)->get();
          // dd($blok);
          return response()->json(['return' => $blok]);
     }

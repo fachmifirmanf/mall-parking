@@ -10,20 +10,15 @@
           
               
             </div>
-      <div class="col-span-12 lg:col-span-4">
-         <div class="intro-y box p-5">
-
-             <button style="width: 310px;" type="readonly" class="button inline-block bg-theme-6 text-white" >
-                <center><i data-feather="box"></i></center>
-             <label><h3>Blok Parkir Telah Terisi Oleh Kendaraan Lain</h3></label>
-
-             </button>
-
-            <button style="width: 310px;" type="readonly" class="button inline-block bg-theme-1 text-white" >
-                <center><i data-feather="box"></i></center>
-             <label><h3>Blok Parkir Yang Dapat Anda Gunakan</h3></label>
-
-             </button>
+            <div class="col-span-12 lg:col-span-4">
+                        <div class="intro-y box p-5">
+             <label>Pilih Lantai: </label>
+              <select id="tipe-lantai" name="tipe-lantais"  class="input border">
+                @forelse($lantai as $index => $lantai)
+               <option onclick="pilih_lantai(event,'{{$lantai->id}}')" value="{{$lantai->id}}">{{$lantai->nama}}</option>
+                @empty
+                @endforelse
+              </select>
           </div>
       </div>
                         <div class="post intro-y overflow-hidden box mt-5 p-5">
@@ -36,9 +31,33 @@
         </tr>
     </thead>
 
-    <tbody id="data">
+    <tbody>
+       
 
-   
+@forelse($blok as $key => $number)
+        
+      @php
+      $count = 0;
+      @endphp
+
+    
+        @if($count == 0)
+        <tr id="data" >
+            @endif 
+            
+  
+        @if($count == 1)
+        @php
+        $count = 0;
+        @endphp
+        </tr>
+        @else
+      
+        <?php $count++;?>
+        @endif
+@empty
+@endforelse
+       
     </tbody>
 
 </table>
@@ -148,68 +167,59 @@
 <script type="text/javascript">
 
     var token = '{!! csrf_token() !!}';
-    var n = 0;
 
-
-$(document).ready(function(){
+function pilih_lantai(e,id) {
+    
+    $('#data').remove();
+    var status;
+    if (e != null) {
+        e.preventDefault();
+    }
+    
 
     $.ajax({
         url: "{{ route('data-block')}}",
         type: 'post',  
-        data:{"_token": "{!! csrf_token() !!}"},
+        data:{"_token": "{!! csrf_token() !!}",lantai_id:id},
         dataType: 'json',
         success: function (data) {
 
             $.each(data, function () {
-                
-                let newData = '<tr>';
-
                 $.each(this, function (index, value) {
+                    if (value.parkir != null) {
+                         status=value.parkir.status;
 
-              
-              
-
-                         status=value.parkir_status;
-                    
-             
-                newData += '</tr>';
 
                     if (status == 1 ) {
-                           newData +=
-
-                              '<td>'+
-                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir_id +')" class="button inline-block bg-theme-6 text-white" >'+( value.lantai_parkirs_nama )+
-                                ' ' + (value.nama) + ' ' + (index + 1)
+                           $('#data').append('' +
+                                '<td>'+
+                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir.id +')" class="button inline-block bg-theme-6 text-white" >'+( value.parkir.id )+
                                 '</button>' +
-                                '</td>'   
-                                ;
+                                '</td>');
 
                     }
                     else{
-                            newData +=
-
-                              '<td>'+
-                                '<button type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="button inline-block bg-theme-1 text-white">'+( value.lantai_parkirs_nama)+
-                                ' ' + (value.nama) + ' ' + (index + 1)
-                                '</button>'+
-                                '</td>'  
-                                ;
+                                                    $('#data').append('' +
+                                '<td>'+
+                                '<button type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="button inline-block bg-theme-1 text-white">'+( value.nama )+
+                                '</button>' +
+                                '</td>');
                     }
-                
-                    
-
-
-
+                }
+                    else{
+       $('#data').append('' +
+                                '<td>'+
+                                '<button type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="button inline-block bg-theme-1 text-white">'+( value.nama )+
+                                '</button>' +
+                                '</td>');
+                    }                   
+                         
                
                 });
-                                   newData += '</tr>';
-
-                        $('#data').append('' + newData);
             });
-
     }
 });
-});
+}
 function detail_blok(e,id) {
     $('#detail-blok'+id+'').modal('show');
 }

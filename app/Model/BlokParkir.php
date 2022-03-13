@@ -14,6 +14,6 @@ class BlokParkir extends Model
     }
         public function parkir()
     {
-        return $this->belongsTo(Parkir::class, 'id','blok_parkir_id');
+        return $this->belongsTo(Parkir::class, 'id','blok_parkir_id')->orderBy('status');
     }
 }
