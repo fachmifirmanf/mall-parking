@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
         "laravelcollective/html": "^6.2",
-        "picqer/php-barcode-generator": "^2.2"
+        "picqer/php-barcode-generator": "^2.2",
+        "simplesoftwareio/simple-qrcode": "~4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

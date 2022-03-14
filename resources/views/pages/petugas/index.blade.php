@@ -12,32 +12,54 @@
             </div>
       <div class="col-span-12 lg:col-span-4">
          <div class="intro-y box p-5">
-
-             <button style="width: 310px;" type="readonly" class="button inline-block bg-theme-6 text-white" >
+            <center>
+             <button sty type="readonly" class="button inline-block bg-theme-6 text-white" >
                 <center><i data-feather="box"></i></center>
-             <label><h3>Blok Parkir Telah Terisi Oleh Kendaraan Lain</h3></label>
+             <label><h3>Blok Parkir Penuh</h3></label>
 
              </button>
 
-            <button style="width: 310px;" type="readonly" class="button inline-block bg-theme-1 text-white" >
+            <button  type="readonly" class="button inline-block bg-theme-1 text-white" >
                 <center><i data-feather="box"></i></center>
-             <label><h3>Blok Parkir Yang Dapat Anda Gunakan</h3></label>
+             <label><h3>Blok Parkir Kosong</h3></label>
 
              </button>
+            <button style="background: linear-gradient(#152B40, #152B40);
+      color: white" type="readonly" class="button inline-block bg-theme-1 text-white" >
+                <center><i data-feather="box"></i></center>
+             <label><h3>Blok Parkir Anda</h3></label>
+
+             </button>
+             </center>
           </div>
       </div>
                         <div class="post intro-y overflow-hidden box mt-5 p-5">
-                        <table class="table table-report -mt-2">
+<table class="table table-report -mt-2" style="background: linear-gradient(#152B40, #152B40);border-radius: 1em;">
     <thead>
+
         <tr>
-            <th>
+@foreach ($lantai as $index => $lan)
+
+    <center>
+
+            <th width="10%" class="text-center text-white">
+               {{ $lan->lantai_parkirs_nama }}  
                 
             </th>
+    </center>
+
+@endforeach
+
         </tr>
+
     </thead>
 
     <tbody id="data">
-
+@foreach ($lantai as $index => $lan)
+    <center>
+    <td  style="width: 3em;background: linear-gradient(#152B40, #152B40);" id="datatd{{$lan->lantai_parkirs_id}}"></td>
+    </center>
+@endforeach
    
     </tbody>
 
@@ -132,7 +154,10 @@
                <input disabled type="text" value="{{ $item2->kendaraan->plat_nomor}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
             </div>
             <div class="col-span-12">
-            <img style="width:420px;height:100px" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($data_barcode, $generatorPNG::TYPE_CODE_128)) }}">
+          <!--   <img style="width:420px;height:100px" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($data_barcode, $generatorPNG::TYPE_CODE_128)) }}"> -->
+       
+           <center> {!! QrCode::size(200)->generate($item2->id); !!}
+           </center>
             </div>
         </div>
             <div class="px-5 py-3 text-right border-t border-gray-200">
@@ -144,7 +169,19 @@
     </div>
 </div> 
 @endforeach
+<style type="text/css">
+    
+     .btn:hover {
+      background: linear-gradient(#152B40, #152B40);
+      color: white
+    }
+    .btn:focus {
+      background: linear-gradient(#152B40, #152B40);
 
+      color: white
+    }
+}
+</style>
 <script type="text/javascript">
 
     var token = '{!! csrf_token() !!}';
@@ -162,7 +199,7 @@ $(document).ready(function(){
 
             $.each(data, function () {
                 
-                let newData = '<tr>';
+               
 
                 $.each(this, function (index, value) {
 
@@ -172,39 +209,52 @@ $(document).ready(function(){
                          status=value.parkir_status;
                     
              
-                newData += '</tr>';
+                if (value.lantai_parkirs_id) {
+
+                    console.log(value.lantai_parkirs_id);
 
                     if (status == 1 ) {
-                           newData +=
-
+                            $('#datatd'+value.lantai_parkirs_id+'').append('' +
+                              
+                              '<tr>'+
+                              '<center>'+
                               '<td>'+
+                              
                                 '<button type="submit" onclick="detail_blok(event,'+ value.parkir_id +')" class="button inline-block bg-theme-6 text-white" >'+( value.lantai_parkirs_nama )+
-                                ' ' + (value.nama) + ' ' + (index + 1)
+                                ' ' + (value.nama) + 
                                 '</button>' +
-                                '</td>'   
-                                ;
+                                '</td>'  + 
+                              '</center>'+
+
+                                '</tr>'   
+                                );
 
                     }
                     else{
-                            newData +=
+                        $('#datatd'+value.lantai_parkirs_id+'').append('' +
+                              '<tr>'+
+                              '<center>'+
 
                               '<td>'+
-                                '<button type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="button inline-block bg-theme-1 text-white">'+( value.lantai_parkirs_nama)+
-                                ' ' + (value.nama) + ' ' + (index + 1)
+                                '<button id="pilih_blok" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.parkir_id+'\')" class="btn button inline-block border bg-theme-1 text-white">'+( value.lantai_parkirs_nama)+
+                                ' ' + (value.nama) + 
                                 '</button>'+
-                                '</td>'  
-                                ;
+                                '</td>' +
+                                '</center>'+
+
+                                '</tr>'   
+                                );
                     }
                 
                     
 
-
+                    }
 
                
                 });
-                                   newData += '</tr>';
-
-                        $('#data').append('' + newData);
+                                  
+                        
+                        
             });
 
     }
@@ -213,10 +263,14 @@ $(document).ready(function(){
 function detail_blok(e,id) {
     $('#detail-blok'+id+'').modal('show');
 }
-function data_blok(e,id,nama) {
+function data_blok(e,id,nama,parkir_id) {
     // alert(id);
     $('#block_id').val(id);  
     $('#block_name').val(nama);
+      
+    
+ 
+
 }
 $("#save").click(function() {
     event.preventDefault();
@@ -244,6 +298,14 @@ $("#save").click(function() {
 });
 }); 
 
+
+// const dayElement = document.getElementById(day);
+// dayElement.classList.toggle("selected-day");
+
+// .selected-day {
+//   background: magenta;
+//   color: white;
+// }
 
 </script>
 @endsection
