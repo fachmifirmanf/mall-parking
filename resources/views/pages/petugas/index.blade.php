@@ -19,12 +19,12 @@
 
              </button>
 
-            <button  type="readonly" class="button inline-block bg-theme-1 text-white" >
+            <button  type="readonly" class="button inline-block border bg-theme-2">
                 <center><i data-feather="box"></i></center>
              <label><h3>Blok Parkir Kosong</h3></label>
 
              </button>
-            <button style="background: linear-gradient(#152B40, #152B40);
+            <button style="background: rgba(28, 63, 170, var(--bg-opacity));
       color: white" type="readonly" class="button inline-block bg-theme-1 text-white" >
                 <center><i data-feather="box"></i></center>
              <label><h3>Blok Parkir Anda</h3></label>
@@ -34,7 +34,7 @@
           </div>
       </div>
                         <div class="post intro-y overflow-hidden box mt-5 p-5">
-<table class="table table-report -mt-2" style="background: linear-gradient(#152B40, #152B40);border-radius: 1em;">
+<table class="table table-report -mt-2" >
     <thead>
 
         <tr>
@@ -42,7 +42,7 @@
 
     <center>
 
-            <th width="10%" class="text-center text-white">
+            <th width="10%" class="text-center ">
                {{ $lan->lantai_parkirs_nama }}  
                 
             </th>
@@ -57,7 +57,7 @@
     <tbody id="data">
 @foreach ($lantai as $index => $lan)
     <center>
-    <td  style="width: 3em;background: linear-gradient(#152B40, #152B40);" id="datatd{{$lan->lantai_parkirs_id}}"></td>
+    <td  id="datatd{{$lan->lantai_parkirs_id}}"></td>
     </center>
 @endforeach
    
@@ -172,13 +172,13 @@
 <style type="text/css">
     
      .btn:hover {
-      background: linear-gradient(#152B40, #152B40);
-      color: white
+      background: rgba(28, 63, 170, var(--bg-opacity));
+      color: white;
     }
     .btn:focus {
-      background: linear-gradient(#152B40, #152B40);
+      background: rgba(28, 63, 170, var(--bg-opacity));
 
-      color: white
+      color: white;
     }
 }
 </style>
@@ -235,8 +235,8 @@ $(document).ready(function(){
                               '<tr>'+
                               '<center>'+
 
-                              '<td>'+
-                                '<button id="pilih_blok" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.parkir_id+'\')" class="btn button inline-block border bg-theme-1 text-white">'+( value.lantai_parkirs_nama)+
+                         '<td>'+
+                                '<button id="pilih_blok" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.parkir_id+'\')" class="btn button inline-block border bg-theme-2" >'+( value.lantai_parkirs_nama)+
                                 ' ' + (value.nama) + 
                                 '</button>'+
                                 '</td>' +

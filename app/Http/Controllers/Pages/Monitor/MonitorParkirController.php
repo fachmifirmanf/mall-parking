@@ -13,11 +13,20 @@ class MonitorParkirController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+            $cari = $request->cari;
+        if ($cari ==null) {
+                    $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('hapus',0)->get();
 
+        }
+        else{
+              $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('id',$cari)->where('hapus',0)->get();
+        }
         return view('pages.monitor.index' ,[
-            'title' => 'Monitoring Parkir'
+            'title' => 'Monitoring Parkir',
+            'parkir' => $parkir,
+            
         ]);
     }
 

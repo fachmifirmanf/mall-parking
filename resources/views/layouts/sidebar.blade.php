@@ -6,14 +6,14 @@
                 </a>
                 <div class="side-nav__devider my-6"></div>
                 <ul>
+
+                    @if(Auth::user() == true)
                     <li>
                         <a href="{{url('dashboard')}}" class="side-menu {{ request()->is('dashboard') ? 'side-menu--active' : ''}}">
                             <div class="side-menu__icon"> <i data-feather="home"></i> </div>
                             <div class="side-menu__title"> Dashboard </div>
                         </a>
                     </li>
-                    @if(Auth::user() == true)
-
                     @if(Auth::user()->role == 1)
 
                     <li>
@@ -53,6 +53,12 @@
                         <a href="{{url('blok-parkir-pengunjung')}}" class="side-menu {{ request()->is('blok-parkir-pengunjung') ? 'side-menu--active' : ''}}">
                             <div class="side-menu__icon"> <i data-feather="box"></i> </div>
                             <div class="side-menu__title"> Blok Parkir</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('monitor-parkir-pengunjung')}}" class="side-menu {{ request()->is('monitor-parkir') ? 'side-menu--active' : ''}}">
+                            <div class="side-menu__icon"> <i data-feather="airplay"></i> </div>
+                            <div class="side-menu__title"> Monitoring Kendaraan </div>
                         </a>
                     </li>
                     @endif

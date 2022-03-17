@@ -117,7 +117,7 @@ function ubahstatusparkir(e,id,sts) {
 
            type:'POST',
 
-           url:"{{ url('update-monitor-parkir') }}",
+           url:"{{ url('update-monitor-parkir-pengunjung') }}",
 
            data:{ "_token": "{{ csrf_token() }}",id:id,},
 
@@ -125,7 +125,7 @@ function ubahstatusparkir(e,id,sts) {
 
               $('#success-modal-preview').modal('show');
                 // $('#status-parkir').val(sts);  
-             window.location="{{ url('monitor-parkir') }}";
+             window.location="{{ url('monitor-parkir-pengunjung') }}";
 
            }
 

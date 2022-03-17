@@ -22,6 +22,9 @@ Route::post('/add-blok-parkir-pengunjung', 'Pages\Pengunjung\BlokParkirControlle
 Route::post('/update-blok-parkir-pengunjung/{id}', 'Pages\Pengunjung\BlokParkirController@update')->name('update-blok-parkir-pengunjung');
 Route::get('/delete-blok-parkir-pengunjung/{id}', 'Pages\Pengunjung\BlokParkirController@destroy')->name('delete-blok-parkir-pengunjung');
 Route::any('/export-blok-parkir-pengunjung/{id}', 'Pages\Pengunjung\BlokParkirController@pdf')->name('export-blok-parkir-pengunjung');
+Route::post('/update-monitor-parkir-pengunjung', 'Pages\Pengunjung\BlokParkirController@update_monitor')->name('update-monitor-parkir-pengunjung');
+// Route::post('/data-status-parkir-pengunjung', 'Pages\Pengunjung\BlokParkirController@monitor')->name('data-status-parkir-pengunjung');
+Route::get('/monitor-parkir-pengunjung', 'Pages\Pengunjung\BlokParkirController@index_monitor')->name('monitor-parkir-pengunjung');
 
 Auth::routes();
 
@@ -73,8 +76,8 @@ Route::get('/delete-blok-parkir/{id}', 'Pages\Parkir\BlokParkirController@destro
  //monitor parkir
 Route::get('/monitor-parkir', 'Pages\Monitor\MonitorParkirController@index')->name('monitor-parkir');
 Route::post('/update-monitor-parkir', 'Pages\Monitor\MonitorParkirController@store')->name('update-monitor-parkir');
-Route::post('/data-status-parkir', 'Pages\Monitor\MonitorParkirController@dataparkir')->name('data-status-parkir');
- //monitor parkir
+// Route::post('/data-status-parkir', 'Pages\Monitor\MonitorParkirController@dataparkir')->name('data-status-parkir');
+ //Ganti Sandi
 Route::get('/ganti-sandi', 'Pages\Akun\AkunController@changepassword')->name('ganti-sandi');
 Route::post('/update-ganti-sandi/{id}', 'Pages\Akun\AkunController@updatechangepassword')->name('update-ganti-sandi');
  //list user

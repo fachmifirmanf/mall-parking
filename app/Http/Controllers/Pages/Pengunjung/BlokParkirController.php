@@ -125,10 +125,28 @@ class BlokParkirController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+
+
+    public function index_monitor(Request $request)
+    {    
+    
+        $cari = $request->cari;
+        if ($cari ==null) {
+                    $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('hapus',0)->get();
+
+        }
+        else{
+              $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('id',$cari)->where('hapus',0)->get();
+        }
+          
+
+
+          return view('pages.pengunjung.monitor' ,[
+            'title' => 'Monitoring Parkir',
+            'parkir' => $parkir,
+        ]);
     }
+  
 
     /**
      * Update the specified resource in storage.
@@ -137,9 +155,18 @@ class BlokParkirController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_monitor(Request $request)
     {
-        //
+         // dd($request->id);
+        $waktu_keluar = date("Y-m-d H:i:s");
+        // dd($waktu_keluar);
+         Parkir::where('id', $request->id)->update([
+
+            'status' => 0,
+            'hapus' => 1,
+            'updated_at' => $waktu_keluar,
+        ]);
+        return response()->json(['success' => true]);
     }
 
     /**
