@@ -80,7 +80,7 @@
                 <td class="table-report__action w-50">
                     @if($p->status == 1)
                 <div class="flex justify-center items-center">
-                <button id="addbtn" class="button w-20 bg-theme-1 text-white btn-submit " onclick="ubahstatusparkir(event,'{{$p->id}}','masuk')">Ganti</button> 
+                <button id="addbtn" class="button w-20 bg-theme-6 text-white btn-submit " onclick="ubahstatusparkir(event,'{{$p->id}}','masuk')">Keluar</button> 
                     </div>
                     @else
                                     <div class="flex justify-center items-center">

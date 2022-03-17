@@ -17,16 +17,16 @@ class MonitorParkirController extends Controller
     {
             $cari = $request->cari;
         if ($cari ==null) {
-                    $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('hapus',0)->get();
+                    $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->get();
 
         }
         else{
-              $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('id',$cari)->where('hapus',0)->get();
+              $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('id',$cari)->get();
         }
         return view('pages.monitor.index' ,[
             'title' => 'Monitoring Parkir',
             'parkir' => $parkir,
-            
+
         ]);
     }
 

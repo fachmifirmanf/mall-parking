@@ -206,21 +206,21 @@ $(document).ready(function(){
               
               
 
-                         status=value.parkir_status;
+                         status=value.parkir.status;
                     
              
-                               if (value.lantai_parkirs_id) {
+                               if (value.lantai.id) {
 
-                    console.log(value.lantai_parkirs_id);
+                    console.log(value.lantai.id);
 
                     if (status == 1 ) {
-                            $('#datatd'+value.lantai_parkirs_id+'').append('' +
+                            $('#datatd'+value.lantai.id+'').append('' +
                               
                               '<tr>'+
                               '<center>'+
                               '<td>'+
                               
-                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir_id +')" class="button inline-block bg-theme-6 text-white" >'+( value.lantai_parkirs_nama )+
+                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir.id +')" class="button inline-block bg-theme-6 text-white" >'+( value.lantai.nama )+
                                 ' ' + (value.nama) + 
                                 '</button>' +
                                 '</td>'  + 
@@ -231,11 +231,11 @@ $(document).ready(function(){
 
                     }
                     else{
-                        $('#datatd'+value.lantai_parkirs_id+'').append('' +
+                        $('#datatd'+value.lantai.id+'').append('' +
                               '<tr>'+
                               '<center>'+
                               '<td>'+
-                                '<button id="pilih_blok" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.parkir_id+'\')" class="btn button inline-block border bg-theme-2" >'+( value.lantai_parkirs_nama)+
+                                '<button id="pilih_blok" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.parkir.id+'\')" class="btn button inline-block border bg-theme-2" >'+( value.lantai.nama)+
                                 ' ' + (value.nama) + 
                                 '</button>'+
                                 '</td>' +

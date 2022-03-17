@@ -50,13 +50,15 @@ class BlokParkirController extends Controller
      */
     public function datablock(Request $request)
     {
-   $blok = DB::table('blok_parkirs')
-        ->leftJoin('parkirs', 'parkirs.blok_parkir_id', '=', 'blok_parkirs.id')
-        ->leftJoin('lantai_parkirs', 'blok_parkirs.lantai_id', '=', 'lantai_parkirs.id')
-        ->select('parkirs.id as parkir_id','parkirs.status as parkir_status','parkirs.hapus' , 'blok_parkirs.*','lantai_parkirs.id as lantai_parkirs_id','lantai_parkirs.nama as lantai_parkirs_nama')
-        ->where('parkirs.hapus',0)
-        ->orderBy('parkir_status', 'asc')
-        ->get();
+         $blok = BlokParkir::with(['lantai','parkir'])->get();
+
+   // $blok = DB::table('blok_parkirs')
+   //      ->leftJoin('parkirs', 'parkirs.blok_parkir_id', '=', 'blok_parkirs.id')
+   //      ->leftJoin('lantai_parkirs', 'blok_parkirs.lantai_id', '=', 'lantai_parkirs.id')
+   //      ->select('parkirs.id as parkir_id','parkirs.status as parkir_status','parkirs.hapus' , 'blok_parkirs.*','lantai_parkirs.id as lantai_parkirs_id','lantai_parkirs.nama as lantai_parkirs_nama')
+   //      ->where('parkirs.hapus',0)
+   //      ->orderBy('parkir_status', 'asc')
+   //      ->get();
          return response()->json(['return' => $blok]);
     }
 
@@ -132,11 +134,11 @@ class BlokParkirController extends Controller
     
         $cari = $request->cari;
         if ($cari ==null) {
-                    $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('hapus',0)->get();
+                    $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->get();
 
         }
         else{
-              $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('id',$cari)->where('hapus',0)->get();
+              $parkir = Parkir::with(['kendaraan','blok','blok.lantai'])->where('id',$cari)->get();
         }
           
 
