@@ -10,41 +10,59 @@
           
               
             </div>
-            <div class="col-span-12 lg:col-span-4">
-                        <div class="intro-y box p-5">
-             <label>Pilih Lantai: </label>
-              <select id="tipe-lantai" name="tipe-lantais"  class="input border">
-                @forelse($lantai as $index => $lantai)
-               <option onclick="pilih_lantai(event,'{{$lantai->id}}')" value="{{$lantai->id}}">{{$lantai->nama}}</option>
-                @empty
-                @endforelse
-              </select>
+      <div class="col-span-12 lg:col-span-4">
+         <div class="intro-y box p-5">
+            <center>
+             <button sty type="readonly" class="button inline-block bg-theme-6 text-white" >
+                <center><i data-feather="box"></i></center>
+             <label><h3>Blok Parkir Penuh</h3></label>
+
+             </button>
+
+            <button  type="readonly" class="button inline-block border bg-theme-2">
+                <center><i data-feather="box"></i></center>
+             <label><h3>Blok Parkir Kosong</h3></label>
+
+             </button>
+            <button style="background: rgba(28, 63, 170, var(--bg-opacity));
+      color: white" type="readonly" class="button inline-block bg-theme-1 text-white" >
+                <center><i data-feather="box"></i></center>
+             <label><h3>Blok Parkir Anda</h3></label>
+
+             </button>
+             </center>
           </div>
       </div>
                         <div class="post intro-y overflow-hidden box mt-5 p-5">
-                        <table class="table table-report -mt-2">
+<table class="table table-report -mt-2" >
     <thead>
+
         <tr>
-            <th>
+@foreach ($lantai as $index => $lan)
+
+    <center>
+
+            <th width="10%" class="text-center ">
+            <button onclick="id_td(event,'{{$lan->lantai_parkirs_id}}')" class="button inline-block">
+               {{ $lan->lantai_parkirs_nama }}  
+                </button>
                 
             </th>
+    </center>
+
+@endforeach
+
         </tr>
+
     </thead>
 
-    <tbody>
-       
-
-@forelse($blok as $key => $number)
-
- 
-        <tr id="data"  class="intro-x">
-         
-
-  </tr>
-
-@empty
-@endforelse
-       
+    <tbody id="data">
+@foreach ($lantai as $index => $lan)
+    <center>
+    <td  id="datatd{{$lan->lantai_parkirs_id}}"></td>
+    </center>
+@endforeach
+   
     </tbody>
 
 </table>
@@ -138,80 +156,134 @@
                <input disabled type="text" value="{{ $item2->kendaraan->plat_nomor}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
             </div>
             <div class="col-span-12">
-            <img style="width:420px;height:100px" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($data_barcode, $generatorPNG::TYPE_CODE_128)) }}">
+          <!--   <img style="width:420px;height:100px" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($data_barcode, $generatorPNG::TYPE_CODE_128)) }}"> -->
+       
+           <center> {!! QrCode::size(200)->generate($item2->id); !!}
+           </center>
             </div>
         </div>
             <div class="px-5 py-3 text-right border-t border-gray-200">
                 <button type="button" data-dismiss="modal"
                         class="btn btn-outline-secondary w-20 mr-1">Close</button>
-              <a href="{{ route('export-blok-parkir-pengunjung', $item2->id) }}" class="btn btn-warning w-24 inline-block mr-1 mb-2">
+              <a href="{{ route('export-blok-parkir-petugas', $item2->id) }}" class="btn btn-warning w-24 inline-block mr-1 mb-2">
                                             <i data-feather="alert-circle" class="w-4 h-4 mr-2"></i>Export</a>
             </div>
     </div>
 </div> 
 @endforeach
+<style type="text/css">
+    
+     .btn:hover {
+      background: rgba(28, 63, 170, var(--bg-opacity));
+      color: white;
+    }
+    .btn:focus {
+      background: rgba(28, 63, 170, var(--bg-opacity));
 
+      color: white;
+    }
+}
+</style>
 <script type="text/javascript">
 
     var token = '{!! csrf_token() !!}';
+    var n = 0;
 
-function pilih_lantai(e,id) {
-    
-    $('#data').remove();
-    var status;
-    if (e != null) {
-        e.preventDefault();
-    }
-    
 
-    $.ajax({
+$(document).ready(function(){
+
+   
+});
+function detail_blok(e,id) {
+    $('#detail-blok'+id+'').modal('show');
+}
+function data_blok(e,id,nama,parkir_id) {
+    // alert(id);
+    $('#block_id').val(id);  
+    $('#block_name').val(nama);
+      
+    
+ 
+
+}
+function id_td(e,id) {
+    // alert(id);
+   
+      
+
+     $.ajax({
         url: "{{ url('/data-block-pengunjung')}}",
         type: 'post',  
-        data:{"_token": "{!! csrf_token() !!}",lantai_id:id},
+        data:{"_token": "{!! csrf_token() !!}"},
         dataType: 'json',
         success: function (data) {
 
             $.each(data, function () {
+                
+                let newData = '<tr>';
+
                 $.each(this, function (index, value) {
-                    if (value.parkir != null) {
-                         status=value.parkir.status;
+
+              
+              
+
+                         status=value.parkir_status;
+                    
+             
+                               if (value.lantai_parkirs_id == id) {
+
+                    console.log(value.lantai_parkirs_id);
+
                     if (status == 1 ) {
-                           $('#data').append('' +
-                                '<td>'+
-                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir.id +')" class="button inline-block bg-theme-6 text-white" >'+( value.parkir.id )+
+                            $('#datatd'+id+'').append('' +
+                              
+                              '<tr>'+
+                              '<center>'+
+                              '<td>'+
+                              
+                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir_id +')" class="button inline-block bg-theme-6 text-white" >'+( value.lantai_parkirs_nama )+
+                                ' ' + (value.nama) + 
                                 '</button>' +
-                                '</td>');
+                                '</td>'  + 
+                              '</center>'+
+
+                                '</tr>'   
+                                );
 
                     }
                     else{
-                                                    $('#data').append('' +
-                                '<td>'+
-                                '<button type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="button inline-block bg-theme-1 text-white">'+( value.nama )+
-                                '</button>' +
-                                '</td>');
+                        $('#datatd'+id+'').append('' +
+                              '<tr>'+
+                              '<center>'+
+                              '<td>'+
+                                '<button id="pilih_blok" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.parkir_id+'\')" class="btn button inline-block border bg-theme-2" >'+( value.lantai_parkirs_nama)+
+                                ' ' + (value.nama) + 
+                                '</button>'+
+                                '</td>' +
+                                '</center>'+
+
+                                '</tr>'   
+                                );
                     }
-                }
+                
+                    
+
+                    }
                     else{
-       $('#data').append('' +
-                                '<td>'+
-                                '<button type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="button inline-block bg-theme-1 text-white">'+( value.nama )+
-                                '</button>' +
-                                '</td>');
-                    }                   
-                         
+$("#data").parents("td").remove();
+                    }
+
+
+
                
                 });
+                                  
             });
+
     }
 });
-}
-function detail_blok(e,id) {
-    $('#detail-blok'+id+'').modal('show');
-}
-function data_blok(e,id,nama) {
-    // alert(id);
-    $('#block_id').val(id);  
-    $('#block_name').val(nama);
+ 
+
 }
 $("#save").click(function() {
     event.preventDefault();
@@ -239,6 +311,14 @@ $("#save").click(function() {
 });
 }); 
 
+
+// const dayElement = document.getElementById(day);
+// dayElement.classList.toggle("selected-day");
+
+// .selected-day {
+//   background: magenta;
+//   color: white;
+// }
 
 </script>
 @endsection

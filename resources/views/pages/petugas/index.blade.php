@@ -43,9 +43,11 @@
     <center>
 
             <th width="10%" class="text-center ">
+                 <button  id="{{$lan->lantai_parkirs_id}}" class="button inline-block border bg-theme-2">
                {{ $lan->lantai_parkirs_nama }}  
-                
+                </button>
             </th>
+         
     </center>
 
 @endforeach
