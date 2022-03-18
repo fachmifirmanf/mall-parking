@@ -28,11 +28,11 @@ class BlokParkirController extends Controller
          $blok = BlokParkir::orderBy('updated_at', 'asc')->get();
 
          // dd($blok);
-                  $lantai = DB::table('blok_parkirs')
-        ->leftJoin('parkirs', 'parkirs.blok_parkir_id', '=', 'blok_parkirs.id')
+                    $lantai = DB::table('blok_parkirs')
+        // ->leftJoin('parkirs', 'parkirs.blok_parkir_id', '=', 'blok_parkirs.id')
         ->leftJoin('lantai_parkirs', 'blok_parkirs.lantai_id', '=', 'lantai_parkirs.id')
-        ->select('parkirs.id as parkir_id','parkirs.status as parkir_status','parkirs.hapus' , 'blok_parkirs.*','lantai_parkirs.id as lantai_parkirs_id','lantai_parkirs.nama as lantai_parkirs_nama')
-        ->where('parkirs.hapus',0)
+        ->select('blok_parkirs.*','lantai_parkirs.id as lantai_parkirs_id','lantai_parkirs.nama as lantai_parkirs_nama')
+        // ->where('parkirs.hapus',0)
         ->orderBy('lantai_parkirs_id', 'asc')
         ->groupBy('lantai_parkirs_id')
         ->get();

@@ -43,11 +43,9 @@
     <center>
 
             <th width="10%" class="text-center ">
-                 <button  id="{{$lan->lantai_parkirs_id}}" class="button inline-block border bg-theme-2">
                {{ $lan->lantai_parkirs_nama }}  
-                </button>
+                
             </th>
-         
     </center>
 
 @endforeach
@@ -76,7 +74,7 @@
                         <div class="intro-y box p-5">
                             <form>
                             <div>
-                                <label>Written By : Nabil Tamami</label>
+                                <!-- <label>Written By : Nabil Tamami</label> -->
                             <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                                 <div class="col-span-12 sm:col-span-6">
                                     <label>Pilih Jenis Kendaraan </label>
@@ -193,7 +191,7 @@
 $(document).ready(function(){
 
     $.ajax({
-        url: "{{ route('data-block')}}",
+        url: "{{ url('/data-block')}}",
         type: 'post',  
         data:{"_token": "{!! csrf_token() !!}"},
         dataType: 'json',
@@ -201,20 +199,18 @@ $(document).ready(function(){
 
             $.each(data, function () {
                 
-               
+                let newData = '<tr>';
 
                 $.each(this, function (index, value) {
 
               
               
-              
-
-                         status=value.parkir.status;
+                    if (value.parkir !=null) {
+                        var status=value.parkir.status;
                     
              
-                               if (value.lantai.id) {
 
-                    console.log(value.lantai.id);
+                    console.log(status);
 
                     if (status == 1 ) {
                             $('#datatd'+value.lantai.id+'').append('' +
@@ -223,7 +219,7 @@ $(document).ready(function(){
                               '<center>'+
                               '<td>'+
                               
-                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir.id +')" class="button inline-block bg-theme-6 text-white" >'+( value.lantai.nama )+
+                                '<button type="submit" onclick="detail_blok(event,'+ value.parkir.id +')" class="button inline-block bg-theme-6 text-white" >'+
                                 ' ' + (value.nama) + 
                                 '</button>' +
                                 '</td>'  + 
@@ -238,8 +234,8 @@ $(document).ready(function(){
                               '<tr>'+
                               '<center>'+
                               '<td>'+
-                                '<button id="pilih_blok" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.parkir.id+'\')" class="btn button inline-block border bg-theme-2" >'+( value.lantai.nama)+
-                                ' ' + (value.nama) + 
+                                '<button id="pilih_blok'+ value.id +'" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.parkir.id+'\')" class="btn button inline-block border bg-theme-2" >'+
+                                ' ' + (value.nama) +  
                                 '</button>'+
                                 '</td>' +
                                 '</center>'+
@@ -253,11 +249,23 @@ $(document).ready(function(){
                     }
 
 
+  else{
+                        $('#datatd'+value.lantai.id+'').append('' +
+                              '<tr>'+
+                              '<center>'+
+                              '<td>'+
+                                '<button id="pilih_blok'+ value.id +'" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="btn button inline-block border bg-theme-2" >'+
+                                ' ' + (value.nama) +  
+                                '</button>'+
+                                '</td>' +
+                                '</center>'+
+
+                                '</tr>'   
+                                );
+                    }
                
                 });
                                   
-                        
-                        
             });
 
     }
@@ -268,6 +276,8 @@ function detail_blok(e,id) {
 }
 function data_blok(e,id,nama,parkir_id) {
     // alert(id);
+    document.getElementById('pilih_blok'+id+'').style.background="#1C3FAA";
+    document.getElementById('pilih_blok'+id+'').style.color="white";
     $('#block_id').val(id);  
     $('#block_name').val(nama);
       
@@ -284,7 +294,7 @@ $("#save").click(function() {
     // var jenis_kendaraan = $("input[name=jenis_kendaraan]").val();
     // alert(blok);
     $.ajax({
-        url: "{{ route('add-blok-parkir-petugas')}}",
+        url: "{{ route('add-blok-parkir')}}",
         type: 'post',  
         data:{"_token": "{!! csrf_token() !!}",plat:plat,jenis_kendaraan:jenis_kendaraan,blok:blok},
         dataType: 'json',
@@ -294,7 +304,7 @@ $("#save").click(function() {
                 //  $('#block_name').val("");
                 //  $('#plat_nomor_kendaraan').val("");
                 // pilih_lantai();  
-             window.location="{{ url('blok-parkir-petugas') }}";
+             window.location="{{ url('blok-parkir') }}";
 
 
     }
