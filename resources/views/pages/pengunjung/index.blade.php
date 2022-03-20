@@ -171,7 +171,7 @@
 @endforeach
 <style type="text/css">
     
-     .btn:hover {
+   /*  .btn:hover {
       background: rgba(28, 63, 170, var(--bg-opacity));
       color: white;
     }
@@ -179,7 +179,11 @@
       background: rgba(28, 63, 170, var(--bg-opacity));
 
       color: white;
-    }
+    }*/
+   button.selected{
+  background-color: #1C3FAA;
+  color: white;
+}
 }
 </style>
 <script type="text/javascript">
@@ -189,6 +193,7 @@
 
 
 $(document).ready(function(){
+
 
     $.ajax({
         url: "{{ url('/data-block-pengunjung')}}",
@@ -234,9 +239,11 @@ $(document).ready(function(){
                               '<tr>'+
                               '<center>'+
                               '<td>'+
-                                '<button id="pilih_blok'+ value.id +'" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.parkir.id+'\')" class="btn button inline-block border bg-theme-2" >'+
+                              '<div class="box-1">'+
+                                '<button id="pilih_blok'+ value.id +'" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.id_blok_count+'\')" class="btn button inline-block bg-theme-2 border" >'+
                                 ' ' + (value.nama) +  
                                 '</button>'+
+                                '</div>'+
                                 '</td>' +
                                 '</center>'+
 
@@ -254,9 +261,13 @@ $(document).ready(function(){
                               '<tr>'+
                               '<center>'+
                               '<td>'+
-                                '<button id="pilih_blok'+ value.id +'" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\')" class="btn button inline-block border bg-theme-2" >'+
+                              '<div class="box-1">'+
+
+                                '<button id="pilih_blok'+ value.id +'" type="submit" onclick="data_blok(event,'+ value.id +',\''+value.nama+'\',\''+value.id_blok_count+'\')" class="btn button inline-block bg-theme-2 border" >'+
                                 ' ' + (value.nama) +  
                                 '</button>'+
+                                '</div>'+
+
                                 '</td>' +
                                 '</center>'+
 
@@ -274,10 +285,49 @@ $(document).ready(function(){
 function detail_blok(e,id) {
     $('#detail-blok'+id+'').modal('show');
 }
-function data_blok(e,id,nama,parkir_id) {
+function data_blok(e,id,nama,id_blok_count) {
+    
+     $('.box-1 button').on('click', function(){
+    $(this).addClass('selected');
+    console.log("aaaaa kenek");
+    $('.box-1 button').not(this).removeClass('selected');
+  });
+
     // alert(id);
-    document.getElementById('pilih_blok'+id+'').style.background="#1C3FAA";
-    document.getElementById('pilih_blok'+id+'').style.color="white";
+  //    $(this).addClass('clicked')
+  // $(this).siblings().removeClass('clicked')
+
+//   var element = document.getElementById('pilih_blok'+id+'');
+
+
+//  if (element.classList.contains('bg-theme-1')) {
+//     console.log("cok");
+// element.classList.remove('bg-theme-1');
+// element.classList.add('bg-theme-2');
+// const na = id;
+//  } else {
+// element.classList.remove('bg-theme-2');
+// element.classList.add('bg-theme-1');
+
+   
+//  }
+ 
+
+
+//   for(i = 1; i <= id_blok_count; i++) {
+//     if(i == id){
+// console.log(id_blok_count);
+
+//     document.getElementById('pilih_blok'+i+'').style.backgroundColor = '';
+//     }
+//     else{
+// console.log(id);
+
+//         document.getElementById('pilih_blok'+id+'').style.backgroundColor = '#1C3FAA';
+//     }
+//   }
+    // document.getElementById('pilih_blok'+id+'').style.background="#1C3FAA";
+    // document.getElementById('pilih_blok'+id+'').style.color="white";
     $('#block_id').val(id);  
     $('#block_name').val(nama);
       

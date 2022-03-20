@@ -25,7 +25,7 @@ class BlokParkirController extends Controller
          $lantai = DB::table('blok_parkirs')
         // ->leftJoin('parkirs', 'parkirs.blok_parkir_id', '=', 'blok_parkirs.id')
         ->leftJoin('lantai_parkirs', 'blok_parkirs.lantai_id', '=', 'lantai_parkirs.id')
-        ->select('blok_parkirs.*','lantai_parkirs.id as lantai_parkirs_id','lantai_parkirs.nama as lantai_parkirs_nama')
+        ->select('blok_parkirs.*','lantai_parkirs.id as lantai_parkirs_id','lantai_parkirs.nama as lantai_parkirs_nama',DB::raw('COUNT(blok_parkirs.id) as id_blok_count'))
         // ->where('parkirs.hapus',0)
         ->orderBy('lantai_parkirs_id', 'asc')
         ->groupBy('lantai_parkirs_id')
