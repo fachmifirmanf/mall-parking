@@ -80,14 +80,19 @@ class BlokParkirController extends Controller
           $id_kendaraan = Kendaraan::where('plat_nomor',$request->plat)->where('id_jenis_kendaraan',$request->jenis_kendaraan)->first();
 
 
-        Parkir::where('blok_parkir_id','!=',$request->blok)->where('kendaraan_id','!=',$id_kendaraan->id)->create([
+        $blok = Parkir::where('blok_parkir_id','!=',$request->blok)->where('kendaraan_id','!=',$id_kendaraan->id);
+        $blok->create([
             'blok_parkir_id' => $request->blok,
             'kendaraan_id' => $id_kendaraan->id,
             'status' => 1,
         ]);
+        $data = Parkir::where('blok_parkir_id','=',$request->blok)->where('kendaraan_id','=',$id_kendaraan->id)->first();
+        // dd($data);
          // session()->regenerate();
         // ['id','blok_parkir_id','kendaraan_id','status'];
-               return response()->json(['success' => true]);
+               // return response()->json(['success' => true]);
+         return response()->json(['return' => $data]);
+
         // return redirect('blok-parkir-petugas');
 
     }

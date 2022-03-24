@@ -41,7 +41,8 @@
                                     <th class="text-center whitespace-nowrap">Lantai</th>
                                     <th class="text-center whitespace-nowrap">Blok Parkir</th>
                                     <th class="text-center whitespace-nowrap">Status</th>
-                                    <th class="text-center whitespace-nowrap">Tanggal</th>
+                                    <th class="text-center whitespace-nowrap">Jam Masuk</th>
+                                    <th class="text-center whitespace-nowrap">Jam Keluar</th>
                                     <th class="text-center whitespace-nowrap">Aksi</th>
                                 </tr>
                             </thead>
@@ -51,6 +52,7 @@
                     @forelse($parkir as $index => $p)
                     @php
                     $t = $p->created_at;
+                    $q = $p->updated_at;
                     @endphp
                     <tr class="intro-x">
                 <td class="text-center"> 
@@ -75,6 +77,15 @@
                 </td>                    
                 <td class="text-center"> 
                 <a href="" class="font-medium whitespace-nowrap">{{ $t }} 
+                </a>
+                </td>
+                 <td class="text-center"> 
+                <a href="" class="font-medium whitespace-nowrap">
+                    @if($p->status == 0)
+                    {{ $q }} 
+                     @else
+                     -
+                     @endif
                 </a>
                 </td>
                 <td class="table-report__action w-50">

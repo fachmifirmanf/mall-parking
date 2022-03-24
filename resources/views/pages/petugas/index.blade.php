@@ -153,6 +153,12 @@
               <label>Plat Nomor Kendaraan</label>
                <input disabled type="text" value="{{ $item2->kendaraan->plat_nomor}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
             </div>
+             <div class="col-span-12 sm:col-span-6">
+                    <label>Jam Masuk</label>
+
+               <input disabled type="text" value="{{ $item2->created_at}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
+            </div>
+
             <div class="col-span-12">
           <!--   <img style="width:420px;height:100px" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($data_barcode, $generatorPNG::TYPE_CODE_128)) }}"> -->
        
@@ -161,10 +167,11 @@
             </div>
         </div>
             <div class="px-5 py-3 text-right border-t border-gray-200">
+                <a href="{{ route('export-blok-parkir-petugas', $item2->id) }}" class="btn btn-warning w-24 inline-block mr-1 mb-2">
+                                            <i data-feather="alert-circle" class="w-4 h-4 mr-2"></i>Cetak</a>
                 <button type="button" data-dismiss="modal"
                         class="btn btn-outline-secondary w-20 mr-1">Close</button>
-              <a href="{{ route('export-blok-parkir-petugas', $item2->id) }}" class="btn btn-warning w-24 inline-block mr-1 mb-2">
-                                            <i data-feather="alert-circle" class="w-4 h-4 mr-2"></i>Export</a>
+              
             </div>
     </div>
 </div> 
