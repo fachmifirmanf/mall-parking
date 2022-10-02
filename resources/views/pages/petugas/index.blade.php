@@ -74,7 +74,7 @@
                         <div class="intro-y box p-5">
                             <form>
                             <div>
-                                <!-- <label>Written By : Nabil Tamami</label> -->
+                  
                             <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                                 <div class="col-span-12 sm:col-span-6">
                                     <label>Pilih Jenis Kendaraan </label>
