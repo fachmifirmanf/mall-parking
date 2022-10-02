@@ -19,7 +19,7 @@
                     <li>
                         <a href="{{url('lantai-parkir')}}" class="side-menu {{ request()->is('lantai-parkir') ? 'side-menu--active' : ''}}">
                             <div class="side-menu__icon"> <i data-feather="server"></i> </div>
-                            <div class="side-menu__title"> Lantai Parkir </div>
+                            <div class="side-menu__title"> Zona Parkir </div>
                         </a>
                     </li>
                     <li>
@@ -37,7 +37,7 @@
                     <li>
                         <a href="{{url('list-user')}}" class="side-menu {{ request()->is('list-user') ? 'side-menu--active' : ''}}">
                             <div class="side-menu__icon"> <i data-feather="users"></i> </div>
-                            <div class="side-menu__title"> List User Petugas </div>
+                            <div class="side-menu__title"> Daftar Petugas </div>
                         </a>
                     </li>
                     @else
@@ -56,7 +56,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{url('monitor-parkir-pengunjung')}}" class="side-menu {{ request()->is('monitor-parkir') ? 'side-menu--active' : ''}}">
+                        <a href="{{url('monitor-parkir-pengunjung')}}" class="side-menu {{ request()->is('monitor-parkir-pengunjung') ? 'side-menu--active' : ''}}">
                             <div class="side-menu__icon"> <i data-feather="airplay"></i> </div>
                             <div class="side-menu__title"> Monitoring Kendaraan </div>
                         </a>

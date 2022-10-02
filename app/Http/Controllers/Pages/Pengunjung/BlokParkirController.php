@@ -33,7 +33,6 @@ class BlokParkirController extends Controller
         // dd($lantai);
          $jenis_kendaraan = JenisKendaraan::all();
          $parkir = Parkir::where('hapus',0)->get();
-
          return view('pages.pengunjung.index' ,[
             'blok' => $blok,
             'lantai' => $lantai,
@@ -91,7 +90,9 @@ class BlokParkirController extends Controller
          // session()->regenerate();
         // ['id','blok_parkir_id','kendaraan_id','status'];
                // return response()->json(['success' => true]);
-         return response()->json(['return' => $data]);
+        
+        //  return response()->json(['return' => $data]);
+         return redirect()->route('export-blok-parkir-pengunjung',$data->id);
 
         // return redirect('blok-parkir-petugas');
 
@@ -153,6 +154,7 @@ class BlokParkirController extends Controller
           return view('pages.pengunjung.monitor' ,[
             'title' => 'Monitoring Parkir',
             'parkir' => $parkir,
+            'cari' => $cari,
         ]);
     }
   

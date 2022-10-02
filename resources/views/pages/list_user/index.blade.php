@@ -9,8 +9,8 @@
                 <!-- BEGIN: Weekly Top Products -->
                 <div class="col-span-12 mt-6">
                     <div class="intro-y block sm:flex items-center h-10">
-                        <h2 class="text-lg font-medium truncate mr-5">Daftar Jenis Kendaraan</h2>
-                        <a href="javascript:;" data-toggle="modal" data-target="#add-data" class="button inline-block bg-theme-1 text-white">Tambah Jenis Kendaraan</a>
+                        <h2 class="text-lg font-medium truncate mr-5">Daftar Petugas</h2>
+                        <a href="javascript:;" data-toggle="modal" data-target="#add-data" class="button inline-block bg-theme-1 text-white">Tambah Petugas</a>
                         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
                              <div class="modal" id="success-modal-preview">
                                  <div class="modal__content">

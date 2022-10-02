@@ -17,7 +17,7 @@ class LantaiParkirController extends Controller
             $lantai = LantaiParkir::all();
          return view('pages.parkir.lantai_parkir' ,[
             'lantai' => $lantai,
-            'title' => 'Lantai Parkir'
+            'title' => 'Zona Parkir'
         ]);
 
     }

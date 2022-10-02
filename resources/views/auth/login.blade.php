@@ -21,6 +21,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN: CSS Assets-->
         <link rel="stylesheet" href="{{url('/midone/dist/css/app.css')}}" />
         <!-- END: CSS Assets-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
     <!-- END: Head -->
     <body class="login">
@@ -68,7 +69,8 @@ License: You must have a valid license purchased only from themeforest(the above
                           @csrf
                         <div class="intro-x mt-8">
                             <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" name="username" placeholder="Username">
-                            <input type="password" name="password" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Password">
+                            <input type="password" name="password" class="form-password intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Password">
+                            <input type="checkbox" class="form-checkbox"> Show password
                         </div>
             
                         <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
@@ -86,6 +88,17 @@ License: You must have a valid license purchased only from themeforest(the above
 
         </div>
         <!-- BEGIN: JS Assets-->
+        <script type="text/javascript">
+            $(document).ready(function(){		
+                $('.form-checkbox').click(function(){
+                    if($(this).is(':checked')){
+                        $('.form-password').attr('type','text');
+                    }else{
+                        $('.form-password').attr('type','password');
+                    }
+                });
+            });
+        </script>
         <script src="{{url('/midone/dist/js/app.js')}}"></script>
         <!-- END: JS Assets-->
     </body>

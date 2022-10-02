@@ -9,7 +9,7 @@
                 <!-- BEGIN: Weekly Top Products -->
                 <div class="col-span-12 mt-6">
                     <div class="intro-y block sm:flex items-center h-10">
-                        <h2 class="text-lg font-medium truncate mr-5">Daftar Parkir</h2>
+                        <h2 class="text-lg font-medium truncate mr-5">Nomor Parkir</h2>
                         <!-- <a href="javascript:;" data-toggle="modal" data-target="#add-data" class="button inline-block bg-theme-1 text-white">Tambah Blok Parkir</a> -->
 
                         <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
@@ -38,12 +38,12 @@
                                  <!--    <th class="text-center whitespace-nowrap">Tanggal</th>
                                     <th class="text-center whitespace-nowrap">Nama Bon-Kas</th> -->
                                     <th class="text-center whitespace-nowrap">Plat Nomor</th>
-                                    <th class="text-center whitespace-nowrap">Lantai</th>
+                                    <th class="text-center whitespace-nowrap">Zona</th>
                                     <th class="text-center whitespace-nowrap">Blok Parkir</th>
                                     <th class="text-center whitespace-nowrap">Status</th>
                                     <th class="text-center whitespace-nowrap">Jam Masuk</th>
                                     <th class="text-center whitespace-nowrap">Jam Keluar</th>
-                                    <th class="text-center whitespace-nowrap">Aksi</th>
+                                    <!-- <th class="text-center whitespace-nowrap">Aksi</th> -->
                                 </tr>
                             </thead>
                             <tbody id="data">
@@ -56,31 +56,31 @@
                     @endphp
                     <tr class="intro-x">
                 <td class="text-center"> 
-                <a href="" class="font-medium whitespace-nowrap">
+                <a class="font-medium whitespace-nowrap">
                     {{ $p->kendaraan->plat_nomor }}
                 </a>
                 </td>
                 <td class="text-center"> 
-                <a href="" class="font-medium whitespace-nowrap">
+                <a class="font-medium whitespace-nowrap">
                     {{ $p->blok->lantai->nama }}
                 </a>
                 </td>
                 <td class="text-center"> 
-                <a href="" class="font-medium whitespace-nowrap">
+                <a class="font-medium whitespace-nowrap">
                     {{ $p->blok->nama }}
                 </a>
                 </td>
                 <td class="text-center"> 
-                <a href="" class="font-medium whitespace-nowrap">
+                <a class="font-medium whitespace-nowrap">
                     {{ $p->status != 1 ? 'keluar' : 'masuk'}}
                 </a>
                 </td>                    
                 <td class="text-center"> 
-                <a href="" class="font-medium whitespace-nowrap">{{ $t }} 
+                <a class="font-medium whitespace-nowrap">{{ $t }} 
                 </a>
                 </td>
                  <td class="text-center"> 
-                <a href="" class="font-medium whitespace-nowrap">
+                <a class="font-medium whitespace-nowrap">
                     @if($p->status == 0)
                     {{ $q }} 
                      @else
@@ -88,6 +88,9 @@
                      @endif
                 </a>
                 </td>
+                @if($cari == null)
+                <td>-</td>
+                @else
                 <td class="table-report__action w-50">
                     @if($p->status == 1)
                 <div class="flex justify-center items-center">
@@ -99,6 +102,7 @@
                     </div>
                     @endif
                 </td>
+                @endif
                 </tr>
                         
                     @empty
@@ -142,13 +146,6 @@ function ubahstatusparkir(e,id,sts) {
 
         });  
 }
-
-
-
-     
-
-
-
 </script>
 @endsection
 

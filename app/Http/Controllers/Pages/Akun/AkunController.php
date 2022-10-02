@@ -17,7 +17,7 @@ class AkunController extends Controller
     {
         $user = User::where('role',2)->get();
           return view('pages.list_user.index' ,[
-            'title' => 'List User Petugas',
+            'title' => 'Daftar Petugas',
             'user' => $user
         ]);
     }

@@ -13,55 +13,51 @@
       <div class="col-span-12 lg:col-span-4">
          <div class="intro-y box p-5">
             <center>
+            <button style="background: rgba(28, 63, 170, var(--bg-opacity));
+      color: white" type="readonly" class="button inline-block bg-theme-1 text-white" >
+                <!-- <center><i data-feather="box"></i></center> -->
+             <label><h3>Blok Parkir Anda</h3></label>
+
+             </button>
              <button sty type="readonly" class="button inline-block bg-theme-6 text-white" >
-                <center><i data-feather="box"></i></center>
+                <!-- <center><i data-feather="box"></i></center> -->
              <label><h3>Blok Parkir Penuh</h3></label>
 
              </button>
 
             <button  type="readonly" class="button inline-block border bg-theme-2">
-                <center><i data-feather="box"></i></center>
+                <!-- <center><i data-feather="box"></i></center> -->
              <label><h3>Blok Parkir Kosong</h3></label>
 
              </button>
-            <button style="background: rgba(28, 63, 170, var(--bg-opacity));
-      color: white" type="readonly" class="button inline-block bg-theme-1 text-white" >
-                <center><i data-feather="box"></i></center>
-             <label><h3>Blok Parkir Anda</h3></label>
-
-             </button>
+            
              </center>
           </div>
       </div>
                         <div class="post intro-y overflow-hidden box mt-5 p-5">
-<table class="table table-report -mt-2" >
+<table class="table table-report -mt-2">
     <thead>
-
-        <tr>
-@foreach ($lantai as $index => $lan)
-
-    <center>
-
-            <th width="10%" class="text-center ">
-               {{ $lan->lantai_parkirs_nama }}  
-                
-            </th>
-    </center>
-
-@endforeach
-
-        </tr>
-
+            @foreach ($lantai as $index => $lan)
+                <center>
+                    <th width="10%" class="text-center ">{{ $lan->lantai_parkirs_nama }}</th>
+                </center>
+            @endforeach
     </thead>
-
     <tbody id="data">
-@foreach ($lantai as $index => $lan)
-    <center>
-    <td  id="datatd{{$lan->lantai_parkirs_id}}"></td>
-    </center>
-@endforeach
-   
+        @foreach ($lantai as $index => $lan)
+                    <center>
+                        <td  id="datatd{{$lan->lantai_parkirs_id}}"></td>
+                    </center>
+        @endforeach
     </tbody>
+    <tfoot>
+        <thead>
+            <tr>
+                <th colspan="2">Zona A - B <br>Lantai 7</th>
+                <th colspan="2">Zona C - D <br>Lantai 8</th>
+            </tr>
+        </thead>
+    </tfoot>
 
 </table>
 
@@ -74,7 +70,7 @@
                         <div class="intro-y box p-5">
                             <form>
                             <div>
-                                <!-- <label>Written By : Nabil Tamami</label> -->
+                             
                             <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
                                 <div class="col-span-12 sm:col-span-6">
                                     <label>Pilih Jenis Kendaraan </label>
@@ -120,7 +116,7 @@
 <div class="modal" id="detail-blok{{ $item2->id }}">
     <div class="modal__content">
      <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
-      <h2 class="font-medium text-base mr-auto">Tambah Blok Parkir</h2>
+      <h2 class="font-medium text-base mr-auto">Karcis Parkir</h2>
  <!--       <button class="button border items-center text-gray-700 hidden sm:flex">
         <i data-feather="file" class="w-4 h-4 mr-2"></i>
          Download Docs
@@ -142,7 +138,7 @@
                <input disabled type="text" value="{{ $item2->blok->nama}}" name="blok_parkir" class="input w-full border mt-2 flex-1">
             </div>
             <div class="col-span-12 sm:col-span-6">
-              <label>Lantai Parkir</label>
+              <label>Zona Parkir</label>
                <input disabled type="text" value="{{ $item2->blok->lantai->nama}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
             </div>
             <div class="col-span-12 sm:col-span-6">
@@ -159,11 +155,16 @@
 
                <input disabled type="text" value="{{ $item2->created_at}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
             </div>
+            <div class="col-span-12 sm:col-span-12">
+            <center style="font-size: 18px;">
+            <h1><strong>Pindai Kode Ini Di Gerbang</strong></h1>
+            </center>
+            </div>
 
             <div class="col-span-12">
           <!--   <img style="width:420px;height:100px" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($data_barcode, $generatorPNG::TYPE_CODE_128)) }}"> -->
        
-           <center> {!! QrCode::size(200)->generate($item2->id); !!}
+           <center> {!! QrCode::size(150)->generate($item2->id); !!}
            </center>
             </div>
         </div>
@@ -198,8 +199,6 @@
 
     var token = '{!! csrf_token() !!}';
     var n = 0;
-
-
 $(document).ready(function(){
 
 
@@ -227,7 +226,6 @@ $(document).ready(function(){
 
                     if (status == 1 ) {
                             $('#datatd'+value.lantai.id+'').append('' +
-                              
                               '<tr>'+
                               '<center>'+
                               '<td>'+
@@ -237,8 +235,7 @@ $(document).ready(function(){
                                 '</button>' +
                                 '</td>'  + 
                               '</center>'+
-
-                                '</tr>'   
+                                '</tr>'
                                 );
 
                     }
@@ -254,7 +251,6 @@ $(document).ready(function(){
                                 '</div>'+
                                 '</td>' +
                                 '</center>'+
-
                                 '</tr>'   
                                 );
                     }
@@ -369,9 +365,9 @@ $("#save").click(function() {
           // });
           //   alert(sid);
 
- window.location="{{ url('blok-parkir-pengunjung') }}";
+        window.location="{{ url('blok-parkir-pengunjung') }}";
         }
-});
+    });
 }); 
 
 

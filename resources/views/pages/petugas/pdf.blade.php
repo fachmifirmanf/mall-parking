@@ -153,58 +153,72 @@
         </style>
     </head>
 
-    <b ody>
+    <body>
         <div class="invoice-box">
            @foreach ($parkir as $index => $item2)
-@php
+           @php
 
-    $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
-    $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
-    $tanggal = date("Y-m-d");
-    $data_barcode = $tanggal . $item2->blok->nama . $item2->blok->lantai->nama . $item2->kendaraan->jenis->nama . $item2->kendaraan->plat_nomor;
+$generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
+$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+$tanggal = date("Y-m-d");
+$data_barcode = $tanggal . $item2->blok->nama . $item2->blok->lantai->nama . $item2->kendaraan->jenis->nama . $item2->kendaraan->plat_nomor;
 
 @endphp
 <div class="modal" id="detail-blok{{ $item2->id }}">
-    <div class="modal__content">
-     <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
-      <h2 >Tambah Blok Parkir</h2>
- <!--       <button class="button border items-center text-gray-700 hidden sm:flex">
-        <i data-feather="file" class="w-4 h-4 mr-2"></i>
-         Download Docs
-         </button> -->
-          <div class="dropdown relative sm:hidden">
-           <a class="dropdown-toggle w-5 h-5 block" href="javascript:;">
-            <i data-feather="more-horizontal" class="w-5 h-5 text-gray-700"></i>
-             </a>
-              <div class="dropdown-box mt-5 absolute w-40 top-0 right-0 z-20">
-               <div class="dropdown-box__content box p-2">
-              </div> 
-             </div> 
-            </div> 
-     </div>
-    
-        <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
-            <div class="col-span-12 sm:col-span-6">
-              <label>Nama Blok Parkir</label>
-               <input disabled type="text" value="{{ $item2->blok->nama}}" name="blok_parkir" class="input w-full border mt-2 flex-1">
-            </div>
-            <div class="col-span-12 sm:col-span-6">
-              <label>Lantai Parkir</label>
-               <input disabled type="text" value="{{ $item2->blok->lantai->nama}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
-            </div>
-            <div class="col-span-12 sm:col-span-6">
-              <label>Jenis Kendaraan</label>
-               <input disabled type="text" value="{{ $item2->kendaraan->jenis->nama}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
-            </div>
-            <div class="col-span-12 sm:col-span-6">
-              <label>Plat Nomor Kendaraan</label>
-               <input disabled type="text" value="{{ $item2->kendaraan->plat_nomor}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
-            </div>
-            <div class="col-span-12">
-            <img style="width:400px;height:100px" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($data_barcode, $generatorPNG::TYPE_CODE_128)) }}">
-            </div>
+<div class="modal__content">
+ <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+  <h2 class="font-medium text-base mr-auto">Karcis Parkir</h2>
+<!--       <button class="button border items-center text-gray-700 hidden sm:flex">
+    <i data-feather="file" class="w-4 h-4 mr-2"></i>
+     Download Docs
+     </button> -->
+      <div class="dropdown relative sm:hidden">
+       <a class="dropdown-toggle w-5 h-5 block" href="javascript:;">
+        <i data-feather="more-horizontal" class="w-5 h-5 text-gray-700"></i>
+         </a>
+          <div class="dropdown-box mt-5 absolute w-40 top-0 right-0 z-20">
+           <div class="dropdown-box__content box p-2">
+          </div> 
+         </div> 
+        </div> 
+ </div>
+
+    <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
+        <div class="col-span-12 sm:col-span-6">
+          <label>Nomor Parkir</label>
+           <input disabled type="text" value="{{ $item2->id}}" name="id_parkir" class="input w-full border mt-2 flex-1">
+        </div>
+        <div class="col-span-12 sm:col-span-6">
+          <label>Nama Blok Parkir</label>
+           <input disabled type="text" value="{{ $item2->blok->nama}}" name="blok_parkir" class="input w-full border mt-2 flex-1">
+        </div>
+        <div class="col-span-12 sm:col-span-6">
+          <label>Zona Parkir</label>
+           <input disabled type="text" value="{{ $item2->blok->lantai->nama}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
+        </div>
+        <div class="col-span-12 sm:col-span-6">
+          <label>Jenis Kendaraan</label>
+           <input disabled type="text" value="{{ $item2->kendaraan->jenis->nama}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
+        </div>
+        <div class="col-span-12 sm:col-span-6">
+          <label>Plat Nomor Kendaraan</label>
+           <input disabled type="text" value="{{ $item2->kendaraan->plat_nomor}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
+        </div>
+        
+        <div class="col-span-12 sm:col-span-6">
+                <label>Tanggal & Jam Masuk</label>
+
+           <input disabled type="text" value="{{ $item2->created_at}}" name="lantai_parkir" class="input w-full border mt-2 flex-1">
+        </div>
+     
+        <div class="col-span-12">
+      <!--   <img style="width:420px;height:100px" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($data_barcode, $generatorPNG::TYPE_CODE_128)) }}"> -->
+   
+       <center> {!! QrCode::size(150)->generate($item2->id); !!}
+       </center>
         </div>
     </div>
+</div>
 </div> 
 @endforeach
 
